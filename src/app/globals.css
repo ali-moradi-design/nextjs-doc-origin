@@ -24,3 +24,38 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* useLinkStatus hint: space is always reserved (no layout shift), and it only
+   fades in if navigation takes longer than 100ms. */
+.link-hint {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: 0.4rem;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.link-hint.is-pending {
+  visibility: visible;
+  animation-name: link-hint-fade-in, link-hint-pulse;
+  animation-duration: 200ms, 1s;
+  animation-delay: 100ms, 100ms;
+  animation-timing-function: ease, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, none;
+}
+
+@keyframes link-hint-fade-in {
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes link-hint-pulse {
+  50% {
+    opacity: 0.2;
+  }
+}
