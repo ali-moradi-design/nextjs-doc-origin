@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ThemeProvider from "./_components/theme-provider";
+import ThemeToggle from "./_components/theme-toggle";
+import { themeScript } from "./_lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,11 +22,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // suppressHydrationWarning: the inline script adds a class to <html>
+    // before React hydrates, so the server and browser classes differ on
+    // purpose. It only applies to this one element, not its children.
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        {/* Runs before the first paint. Reading cookies() here instead would
+            make every page in the app dynamic. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-full flex flex-col">
+        {/* Interleaving: pages stay Server Components inside the provider. */}
+        <ThemeProvider>
+          {children}
+          <ThemeToggle />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

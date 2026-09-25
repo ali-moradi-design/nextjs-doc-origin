@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* dark: follows the OS by default, but a .dark or .light class on any
-   ancestor overrides it (used by /examples/theme-provider). */
+/* dark: follows the OS by default, but a .dark or .light class on <html>
+   overrides it. The class is set by the theme toggle (_components). */
 @custom-variant dark {
   &:where(.dark, .dark *) {
     @slot;
@@ -35,10 +35,15 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
