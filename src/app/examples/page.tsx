@@ -11,6 +11,11 @@ const examples = [
     title: "Server and Client Components",
     description: "use client boundary, props, interleaving, context, server-only.",
   },
+  {
+    href: "/examples/fetching-data",
+    title: "Fetching Data",
+    description: "Blocking vs parallel, streaming with Suspense, use(), React.cache.",
+  },
 ];
 
 export default function Page() {
