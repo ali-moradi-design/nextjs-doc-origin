@@ -94,3 +94,26 @@ export const getUserUncached = queryUser;
 // Same function wrapped in React.cache: within one request, every call with
 // the same id shares one query (and one queryId).
 export const getUser = cache(queryUser);
+
+export type Item = { id: string; name: string; price: number; queryId: string };
+
+// Used by the preloading experiment: a slow check that runs *before* the
+// page knows whether it will render the item at all.
+export async function checkIsAvailable(id: string): Promise<boolean> {
+  log(`checkIsAvailable("${id}") started`);
+  await sleep(1000);
+  return true;
+}
+
+async function queryItem(id: string): Promise<Item> {
+  const queryId = crypto.randomUUID().slice(0, 6);
+  log(`queryItem("${id}") started, query ${queryId}`);
+  await sleep(1500);
+  return { id, name: "Aurora Lamp", price: 89, queryId };
+}
+
+export const getItemUncached = queryItem;
+
+// Wrapped in React.cache so the component can reuse the request that
+// preload() already started.
+export const getItem = cache(queryItem);

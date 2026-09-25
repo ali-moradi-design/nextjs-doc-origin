@@ -37,4 +37,10 @@ export const experiments = [
     description: "Six components ask for the same user. With cache, only one query runs.",
     expected: "~0.3s",
   },
+  {
+    href: `${base}/preload`,
+    label: "7. Preloading",
+    description: "Start a request early, before other blocking work, and reuse it later.",
+    expected: "2.5s → 1.5s",
+  },
 ];
