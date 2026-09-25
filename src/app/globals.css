@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+/* dark: follows the OS by default, but a .dark or .light class on any
+   ancestor overrides it (used by /examples/theme-provider). */
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not(.light, .light *)) {
+      @slot;
+    }
+  }
+}
+
+/* Native form controls and scrollbars follow the forced theme too. */
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

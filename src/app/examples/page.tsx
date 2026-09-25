@@ -11,6 +11,11 @@ const examples = [
     title: "Server and Client Components",
     description: "use client boundary, props, interleaving, context, server-only.",
   },
+  {
+    href: "/examples/theme-provider",
+    title: "Theme Provider (dark mode)",
+    description: "Client provider, Server children, cookies, no flash on load.",
+  },
 ];
 
 export default function Page() {
