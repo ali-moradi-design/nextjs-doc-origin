@@ -6,6 +6,11 @@ const examples = [
     title: "Linking and Navigating",
     description: "Prefetching, streaming, client-side transitions, useLinkStatus.",
   },
+  {
+    href: "/examples/server-and-client-components",
+    title: "Server and Client Components",
+    description: "use client boundary, props, interleaving, context, server-only.",
+  },
 ];
 
 export default function Page() {
