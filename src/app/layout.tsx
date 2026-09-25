@@ -23,14 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <header className="flex h-16 w-full items-center justify-center border-b border-zinc-200 bg-white px-8 dark:border-zinc-800 dark:bg-black">
-          <h1 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-            salam olaghe aziz halet chetore
-          </h1>
-        </header>
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
