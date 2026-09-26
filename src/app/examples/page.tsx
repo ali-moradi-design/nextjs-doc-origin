@@ -21,6 +21,11 @@ const examples = [
     title: "Mutating Data",
     description: "Server Actions: forms, useActionState, onClick, useEffect, cookies, redirect.",
   },
+  {
+    href: "/examples/caching",
+    title: "Caching",
+    description: "Cache Components: use cache, cacheLife, static shell, Suspense, cache keys.",
+  },
 ];
 
 export default function Page() {
