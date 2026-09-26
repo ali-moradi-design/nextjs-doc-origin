@@ -42,6 +42,14 @@ export function removeNote(id: string) {
   store.notes = store.notes.filter((note) => note.id !== id);
 }
 
+// Only the server can answer this: the browser doesn't have every note.
+export function titleExists(title: string) {
+  const wanted = title.toLowerCase();
+  return store.notes.some(
+    (note) => note.text.split(" — ")[0].toLowerCase() === wanted,
+  );
+}
+
 export function clearNotes() {
   store.notes = [];
 }

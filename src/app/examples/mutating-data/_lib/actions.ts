@@ -6,6 +6,8 @@
 import { refresh, revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { z } from "zod";
+import { noteSchema, type NoteResult } from "./note-schema";
 import * as db from "./store";
 
 // ⚠️ A real app must check authentication and authorization at the top of
@@ -81,4 +83,26 @@ export async function createNoteAndRedirect(formData: FormData) {
     revalidatePath("/examples/mutating-data/static-list");
   }
   redirect("/examples/mutating-data/static-list");
+}
+
+// Used with react-hook-form. Receives a plain object, not FormData. The
+// type is `unknown` on purpose: anyone can POST anything to this action,
+// so the server validates again with the same schema the form used.
+export async function createNoteFromHookForm(input: unknown): Promise<NoteResult> {
+  await db.sleep();
+
+  const result = noteSchema.safeParse(input);
+  if (!result.success) {
+    return { ok: false, errors: z.flattenError(result.error).fieldErrors };
+  }
+
+  const { title, content } = result.data;
+  // A rule the browser can't check on its own.
+  if (db.titleExists(title)) {
+    return { ok: false, errors: { title: ["A note with this title already exists."] } };
+  }
+
+  db.addNote(content ? `${title} — ${content}` : title);
+  refresh();
+  return { ok: true };
 }

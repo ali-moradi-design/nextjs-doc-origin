@@ -169,6 +169,15 @@ export default async function Page() {
           </Link>
         </div>
       </Section>
+
+      <Section
+        title="7. react-hook-form + Server Action"
+        description="For bigger forms: react-hook-form validates in the browser, the Server Action validates again with the same zod schema and saves."
+      >
+        <Link href="/examples/mutating-data/hook-form" className={`inline-block ${buttonClass}`}>
+          Open the react-hook-form page →
+        </Link>
+      </Section>
     </main>
   );
 }
