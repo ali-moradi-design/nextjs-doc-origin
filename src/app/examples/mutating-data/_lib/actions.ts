@@ -72,8 +72,13 @@ export async function createNoteAndRedirect(formData: FormData) {
   }
 
   db.addNote(result.text);
-  // Mark the list page as stale first, then leave. redirect() throws, so
-  // any code after it would never run.
-  revalidatePath("/examples/mutating-data");
-  redirect("/examples/mutating-data");
+
+  // The static list is cached. Without this call it keeps showing the old
+  // notes. (The main notes page needs nothing: it reads cookies, so it is
+  // dynamic and never cached.) It must come before redirect(), which
+  // throws: any code after redirect() never runs.
+  if (formData.get("revalidate") === "on") {
+    revalidatePath("/examples/mutating-data/static-list");
+  }
+  redirect("/examples/mutating-data/static-list");
 }

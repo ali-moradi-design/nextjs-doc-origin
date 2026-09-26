@@ -151,12 +151,17 @@ export default async function Page() {
       </Section>
 
       <Section
-        title="6. Redirect after a mutation"
-        description="A separate page whose action saves the note, revalidates this page, then redirects back here."
+        title="6. revalidatePath and redirect"
+        description="A separate page whose action saves the note, optionally revalidates a static (cached) list, then redirects to it. Compare with and without revalidatePath."
       >
-        <Link href="/examples/mutating-data/new" className={`inline-block ${buttonClass}`}>
-          Open the new-note page →
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/examples/mutating-data/new" className={buttonClass}>
+            Open the new-note page →
+          </Link>
+          <Link href="/examples/mutating-data/static-list" className={buttonClass}>
+            Open the static list →
+          </Link>
+        </div>
       </Section>
     </main>
   );
