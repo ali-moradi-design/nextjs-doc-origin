@@ -1,11 +1,12 @@
-import { connection } from "next/server";
 import { Suspense } from "react";
 import PostList from "../_components/post-list";
 import { CardSkeleton, PageIntro } from "../_components/ui";
 import { elapsed, getPosts, getRequestStart } from "../_lib/db";
 
-export default async function Page() {
-  await connection();
+export default function Page() {
+  // No `await connection()` here: with Cache Components, waiting at the top
+  // would block the whole page. The slow queries below sit inside
+  // <Suspense>, so they already run at request time.
   getRequestStart();
 
   // ✅ No await: the query starts on the server right now, and the Promise

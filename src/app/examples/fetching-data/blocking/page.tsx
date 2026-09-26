@@ -3,6 +3,10 @@ import { AlbumsCard, ArtistCard, TracksCard } from "../_components/artist-cards"
 import { PageIntro } from "../_components/ui";
 import { elapsed, getAlbums, getArtist, getRequestStart, getTopTracks } from "../_lib/db";
 
+// This page blocks on purpose (that's the lesson). Cache Components would
+// reject a blocking page, so this segment opts out of that check.
+export const instant = false;
+
 export default async function Page() {
   // Render on every request (otherwise the page would be prerendered at
   // build time and the delays would happen only once, during the build).

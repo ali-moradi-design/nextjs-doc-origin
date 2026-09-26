@@ -4,6 +4,10 @@ import ProductDetails from "../../_components/product-details";
 import { getProduct, sleep } from "../../_lib/products";
 
 // Same as /slow/[id], but deliberately WITHOUT a loading.tsx file.
+// Cache Components would reject a page that blocks like this. This demo
+// blocks on purpose, so it opts out of that check.
+export const instant = false;
+
 export default async function Page({
   params,
 }: PageProps<"/examples/linking-and-navigating/blocking/[id]">) {

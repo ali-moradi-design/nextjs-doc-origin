@@ -148,7 +148,7 @@ export default function Page() {
             },
             {
               title: "Works without JavaScript",
-              body: "A form in a Server Component uses plain HTML form submission, so it works before JavaScript loads (progressive enhancement).",
+              body: "A form in a Server Component uses plain HTML form submission, so it works before JavaScript loads (progressive enhancement). Caveat: content streamed with <Suspense> needs JavaScript to appear, so data shown inside a Suspense boundary won't update without it.",
             },
             {
               title: "Less JavaScript",

@@ -1,10 +1,16 @@
+import { cacheLife } from "next/cache";
 import Link from "next/link";
 import * as db from "../_lib/store";
 
-// No cookies(), no searchParams, no connection(): this page is STATIC.
-// It is rendered once (at build time) and the result is cached. It only
-// changes when something calls revalidatePath() for this path.
-export default function Page() {
+// A cached page: rendered once (at build time) and the result is kept.
+// It only changes when something calls revalidatePath() for this path.
+export default async function Page() {
+  // Cache Components: "use cache" is what makes this page static. It also
+  // allows `new Date()` below: the time is frozen into the cached result.
+  // "max" = keep it as long as possible (until revalidated or rebuilt).
+  "use cache";
+  cacheLife("max");
+
   const notes = db.getNotes();
   const renderedAt = new Date().toLocaleTimeString("en-US");
 

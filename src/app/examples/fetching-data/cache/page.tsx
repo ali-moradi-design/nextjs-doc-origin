@@ -1,4 +1,4 @@
-import { connection } from "next/server";
+import { Suspense } from "react";
 import { PageIntro } from "../_components/ui";
 import { getRequestStart, getUser, getUserUncached } from "../_lib/db";
 
@@ -27,8 +27,10 @@ function Badge({ place, name, queryId }: { place: string; name: string; queryId:
 
 const places = ["Header", "Sidebar", "Footer"];
 
-export default async function Page() {
-  await connection();
+export default function Page() {
+  // No `await connection()` here: with Cache Components, waiting at the top
+  // would block the whole page. The slow queries below sit inside
+  // <Suspense>, so they already run at request time.
   getRequestStart();
 
   return (
@@ -44,11 +46,13 @@ export default async function Page() {
       <div className="grid gap-4 sm:grid-cols-2">
         <section className="space-y-3">
           <h2 className="font-semibold">Without React.cache</h2>
-          <ul className="space-y-2">
-            {places.map((place) => (
-              <UncachedBadge key={place} place={place} />
-            ))}
-          </ul>
+          <Suspense fallback={<p className="text-sm text-zinc-500">Loading…</p>}>
+            <ul className="space-y-2">
+              {places.map((place) => (
+                <UncachedBadge key={place} place={place} />
+              ))}
+            </ul>
+          </Suspense>
           <p className="text-sm text-red-600 dark:text-red-400">
             3 different query ids = 3 database queries.
           </p>
@@ -56,11 +60,13 @@ export default async function Page() {
 
         <section className="space-y-3">
           <h2 className="font-semibold">With React.cache</h2>
-          <ul className="space-y-2">
-            {places.map((place) => (
-              <CachedBadge key={place} place={place} />
-            ))}
-          </ul>
+          <Suspense fallback={<p className="text-sm text-zinc-500">Loading…</p>}>
+            <ul className="space-y-2">
+              {places.map((place) => (
+                <CachedBadge key={place} place={place} />
+              ))}
+            </ul>
+          </Suspense>
           <p className="text-sm text-emerald-600 dark:text-emerald-400">
             Same query id everywhere = 1 database query, shared.
           </p>

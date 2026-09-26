@@ -27,6 +27,10 @@ function parseMode(value: string | string[] | undefined): Mode {
   return typeof value === "string" && value in modes ? (value as Mode) : "none";
 }
 
+// This page blocks on purpose (that's the lesson). Cache Components would
+// reject a blocking page, so this segment opts out of that check.
+export const instant = false;
+
 export default async function Page({
   searchParams,
 }: PageProps<"/examples/fetching-data/preload">) {

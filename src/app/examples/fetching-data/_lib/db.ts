@@ -1,6 +1,7 @@
 // A fake database with slow queries, so the timing of each pattern is easy
 // to see. In a real app these would be fetch() calls or ORM queries.
 import "server-only";
+import { connection } from "next/server";
 import { cache } from "react";
 
 export type Artist = { id: string; username: string; name: string; genre: string };
@@ -83,6 +84,8 @@ export async function getPosts(): Promise<Post[]> {
 
 // Each call is a separate "query" with its own random id.
 async function queryUser(id: string): Promise<User> {
+  // A random id must be made at request time, not baked into the build.
+  await connection();
   const queryId = crypto.randomUUID().slice(0, 6);
   log(`queryUser("${id}") started, query ${queryId}`);
   await sleep(300);
@@ -106,6 +109,7 @@ export async function checkIsAvailable(id: string): Promise<boolean> {
 }
 
 async function queryItem(id: string): Promise<Item> {
+  await connection();
   const queryId = crypto.randomUUID().slice(0, 6);
   log(`queryItem("${id}") started, query ${queryId}`);
   await sleep(1500);

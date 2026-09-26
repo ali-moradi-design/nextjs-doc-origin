@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { refresh } from "next/cache";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
+import { Suspense } from "react";
 import ClearButton from "./_components/clear-button";
 import LikeButton from "./_components/like-button";
 import NoteForm from "./_components/note-form";
@@ -33,11 +35,95 @@ const inputClass =
 const buttonClass =
   "rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800";
 
-export default async function Page() {
-  // Reading cookies makes this page dynamic: rendered on every request.
+// ─── Request-time pieces ──────────────────────────────────────────────
+// Cache Components: anything that reads a cookie or data that changes
+// (our in-memory store) must run at request time, inside <Suspense>.
+// Everything else on the page is prerendered into the static shell.
+
+async function Greeting() {
   const name = (await cookies()).get("demo-name")?.value;
+  return name ? <>Hi {name}! </> : null;
+}
+
+async function NotesSection({ clearAll }: { clearAll: () => Promise<void> }) {
+  // The store can change at any time, so read it per request, not at build.
+  await connection();
   const notes = db.getNotes();
 
+  return (
+    <Section
+      title={`Notes (${notes.length})`}
+      description="This list is rendered on the server. After each change, refresh() re-renders it with the new data."
+    >
+      <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        {notes.map((note) => (
+          <li key={note.id} className="flex items-center justify-between gap-4 py-2 text-sm">
+            <span>
+              {note.text}{" "}
+              <span className="font-mono text-xs text-zinc-500">{note.createdAt}</span>
+            </span>
+            {/* formAction on a button: this button calls deleteNote
+                instead of the form's own action. */}
+            <form>
+              <input type="hidden" name="id" value={note.id} />
+              <button
+                formAction={deleteNote}
+                aria-label={`Delete "${note.text}"`}
+                className="text-zinc-400 hover:text-red-600 dark:hover:text-red-400"
+              >
+                ✕
+              </button>
+            </form>
+          </li>
+        ))}
+        {notes.length === 0 && (
+          <li className="py-2 text-sm text-zinc-500">No notes yet.</li>
+        )}
+      </ul>
+      <div className="flex justify-end">
+        <ClearButton clearAction={clearAll} />
+      </div>
+    </Section>
+  );
+}
+
+async function Likes() {
+  await connection();
+  return <LikeButton initialLikes={db.getLikes()} />;
+}
+
+async function Views() {
+  await connection();
+  return <ViewCount initialViews={db.getViews()} />;
+}
+
+function NameFormView({ name }: { name?: string }) {
+  return (
+    <form action={saveName} className="flex gap-2">
+      <input
+        name="name"
+        defaultValue={name}
+        placeholder="Your name (empty to delete)"
+        aria-label="Your name"
+        className={inputClass}
+      />
+      <button type="submit" className={buttonClass}>
+        Save
+      </button>
+    </form>
+  );
+}
+
+async function NameForm() {
+  const name = (await cookies()).get("demo-name")?.value;
+  return <NameFormView name={name} />;
+}
+
+const loading = <p className="text-sm text-zinc-500">Loading…</p>;
+
+// ─── The page: no await at the top, so it has a static shell ───────────
+
+export default function Page() {
   // Server Actions defined inline, inside a Server Component.
   // "use server" as the first line of the function body.
   async function quickAdd(formData: FormData) {
@@ -59,7 +145,10 @@ export default async function Page() {
       <header className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">Mutating Data</h1>
         <p className="text-zinc-600 dark:text-zinc-400">
-          {name ? `Hi ${name}! ` : ""}Every button on this page calls a Server
+          <Suspense>
+            <Greeting />
+          </Suspense>
+          Every button on this page calls a Server
           Action. Open DevTools → Network: each one is a POST request to this
           same URL.
         </p>
@@ -71,43 +160,19 @@ export default async function Page() {
         </Link>
       </header>
 
-      <Section
-        title={`Notes (${notes.length})`}
-        description="This list is rendered on the server. After each change, refresh() re-renders it with the new data."
+      <Suspense
+        fallback={
+          <Section title="Notes" description="Loading notes…">
+            <div className="h-16 animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+          </Section>
+        }
       >
-        <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
-          {notes.map((note) => (
-            <li key={note.id} className="flex items-center justify-between gap-4 py-2 text-sm">
-              <span>
-                {note.text}{" "}
-                <span className="font-mono text-xs text-zinc-500">{note.createdAt}</span>
-              </span>
-              {/* formAction on a button: this button calls deleteNote
-                  instead of the form's own action. */}
-              <form>
-                <input type="hidden" name="id" value={note.id} />
-                <button
-                  formAction={deleteNote}
-                  aria-label={`Delete "${note.text}"`}
-                  className="text-zinc-400 hover:text-red-600 dark:hover:text-red-400"
-                >
-                  ✕
-                </button>
-              </form>
-            </li>
-          ))}
-          {notes.length === 0 && (
-            <li className="py-2 text-sm text-zinc-500">No notes yet.</li>
-          )}
-        </ul>
-        <div className="flex justify-end">
-          <ClearButton clearAction={clearAll} />
-        </div>
-      </Section>
+        <NotesSection clearAll={clearAll} />
+      </Suspense>
 
       <Section
         title="1. Form in a Server Component"
-        description="No 'use client', no JavaScript needed. Try it with JavaScript disabled: the form still submits (progressive enhancement)."
+        description="No 'use client', no JavaScript needed: with JavaScript disabled the form still submits and saves (progressive enhancement). But the notes list streams in with <Suspense>, and showing streamed content needs JavaScript, so without it the list stays on its loading state."
       >
         <form action={quickAdd} className="flex gap-2">
           <input name="text" placeholder="Quick note…" aria-label="Quick note" className={inputClass} />
@@ -128,32 +193,27 @@ export default async function Page() {
         title="3. Event handler (onClick)"
         description="The button calls the action like a normal async function and uses its return value."
       >
-        <LikeButton initialLikes={db.getLikes()} />
+        <Suspense fallback={loading}>
+          <Likes />
+        </Suspense>
       </Section>
 
       <Section
         title="4. useEffect"
         description="Called automatically when the component mounts, no click needed. Refresh the page to count another view."
       >
-        <ViewCount initialViews={db.getViews()} />
+        <Suspense fallback={loading}>
+          <Views />
+        </Suspense>
       </Section>
 
       <Section
         title="5. Cookies"
         description="The action sets a cookie. Next.js re-renders the page automatically, so the greeting in the header updates."
       >
-        <form action={saveName} className="flex gap-2">
-          <input
-            name="name"
-            defaultValue={name}
-            placeholder="Your name (empty to delete)"
-            aria-label="Your name"
-            className={inputClass}
-          />
-          <button type="submit" className={buttonClass}>
-            Save
-          </button>
-        </form>
+        <Suspense fallback={<NameFormView />}>
+          <NameForm />
+        </Suspense>
       </Section>
 
       <Section
