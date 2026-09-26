@@ -16,6 +16,11 @@ const examples = [
     title: "Fetching Data",
     description: "Blocking vs parallel, streaming with Suspense, use(), React.cache.",
   },
+  {
+    href: "/examples/mutating-data",
+    title: "Mutating Data",
+    description: "Server Actions: forms, useActionState, onClick, useEffect, cookies, redirect.",
+  },
 ];
 
 export default function Page() {
