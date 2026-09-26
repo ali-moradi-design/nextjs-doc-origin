@@ -63,6 +63,12 @@ export default async function Page() {
           Action. Open DevTools → Network: each one is a POST request to this
           same URL.
         </p>
+        <Link
+          href="/examples/mutating-data/guide"
+          className="inline-block text-sm font-medium text-fuchsia-600 hover:underline dark:text-fuchsia-400"
+        >
+          Read the pros and cons of Server Actions →
+        </Link>
       </header>
 
       <Section
