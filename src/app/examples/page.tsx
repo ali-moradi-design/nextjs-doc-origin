@@ -25,6 +25,12 @@ const examples = [
     description:
       "Server Actions: forms, useActionState, onClick, useEffect, cookies, redirect.",
   },
+  {
+    href: "/examples/error-handling",
+    title: "Error Handling",
+    description:
+      "Expected errors, notFound, error.tsx, catchError, global-error.",
+  },
 ];
 
 export default function Page() {

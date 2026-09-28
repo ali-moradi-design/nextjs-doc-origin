@@ -24,10 +24,12 @@ Update this file at the end of every lesson.
 | 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                       |
 | 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                       |
 | 8   | Caching (Cache Components)                                   | `/examples/caching` (branch `cache-components`) |
+| 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                      |
 
 ## Next lesson
 
 9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
+   (skipped for now; lesson 10 was done first). After it: 11. CSS.
 
 ## Things learned the hard way
 
@@ -38,3 +40,7 @@ Update this file at the end of every lesson.
   restart until the next build.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.
+- Error boundaries in 16.3 get `retry` (re-fetches from the server) and
+  `reset` (no re-fetch). `catchError` from `next/error` types `error` as
+  `unknown`. In production, a Server Component error reaches the client as
+  a generic message (React error #441) plus `digest`.
