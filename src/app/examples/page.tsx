@@ -37,6 +37,12 @@ const examples = [
     description:
       "Tailwind v4 (@theme, @utility), CSS Modules, global CSS, import order, cssChunking.",
   },
+  {
+    href: "/examples/images",
+    title: "Images",
+    description:
+      "next/image: static and dynamic imports, remote images, fill, sizes, quality, placeholder.",
+  },
 ];
 
 export default function Page() {

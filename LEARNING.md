@@ -27,10 +27,11 @@ Update this file at the end of every lesson.
 | 9   | Revalidating                                                 | `/examples/revalidating` (branch `cache-components`) |
 | 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                           |
 | 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                      |
+| 12  | Images (next/image, all props, remotePatterns, qualities)    | `/examples/images`                                   |
 
 ## Next lesson
 
-12. Images: `node_modules/next/dist/docs/01-app/01-getting-started/12-images.md`
+13. Fonts: `node_modules/next/dist/docs/01-app/01-getting-started/13-fonts.md`
 
 ## Things learned the hard way
 
@@ -58,3 +59,8 @@ Update this file at the end of every lesson.
   `reset` (no re-fetch). `catchError` from `next/error` types `error` as
   `unknown`. In production, a Server Component error reaches the client as
   a generic message (React error #441) plus `digest`.
+- Images: `qualities` in `next.config.ts` is an allowlist (Next.js 16
+  default `[75]`); a `quality` outside it is served as the closest value.
+  Without `sizes`, the `srcset` is `1x`/`2x` of the `width` prop, so a
+  `width` much larger than the rendered size downloads a much bigger file.
+  `priority` is deprecated in 16: use `preload` (or `loading="eager"`).
