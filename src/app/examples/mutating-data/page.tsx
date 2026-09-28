@@ -23,7 +23,9 @@ function Section({
     <section className="space-y-4 rounded-2xl border border-zinc-200 p-6 dark:border-zinc-800">
       <div className="space-y-1">
         <h2 className="font-semibold">{title}</h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">{description}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          {description}
+        </p>
       </div>
       {children}
     </section>
@@ -57,10 +59,15 @@ async function NotesSection({ clearAll }: { clearAll: () => Promise<void> }) {
     >
       <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
         {notes.map((note) => (
-          <li key={note.id} className="flex items-center justify-between gap-4 py-2 text-sm">
+          <li
+            key={note.id}
+            className="flex items-center justify-between gap-4 py-2 text-sm"
+          >
             <span>
               {note.text}{" "}
-              <span className="font-mono text-xs text-zinc-500">{note.createdAt}</span>
+              <span className="font-mono text-xs text-zinc-500">
+                {note.createdAt}
+              </span>
             </span>
             {/* formAction on a button: this button calls deleteNote
                 instead of the form's own action. */}
@@ -148,9 +155,8 @@ export default function Page() {
           <Suspense>
             <Greeting />
           </Suspense>
-          Every button on this page calls a Server
-          Action. Open DevTools → Network: each one is a POST request to this
-          same URL.
+          Every button on this page calls a Server Action. Open DevTools →
+          Network: each one is a POST request to this same URL.
         </p>
         <Link
           href="/examples/mutating-data/guide"
@@ -175,7 +181,12 @@ export default function Page() {
         description="No 'use client', no JavaScript needed: with JavaScript disabled the form still submits and saves (progressive enhancement). But the notes list streams in with <Suspense>, and showing streamed content needs JavaScript, so without it the list stays on its loading state."
       >
         <form action={quickAdd} className="flex gap-2">
-          <input name="text" placeholder="Quick note…" aria-label="Quick note" className={inputClass} />
+          <input
+            name="text"
+            placeholder="Quick note…"
+            aria-label="Quick note"
+            className={inputClass}
+          />
           <button type="submit" className={buttonClass}>
             Add
           </button>
@@ -224,7 +235,10 @@ export default function Page() {
           <Link href="/examples/mutating-data/new" className={buttonClass}>
             Open the new-note page →
           </Link>
-          <Link href="/examples/mutating-data/static-list" className={buttonClass}>
+          <Link
+            href="/examples/mutating-data/static-list"
+            className={buttonClass}
+          >
             Open the static list →
           </Link>
         </div>
@@ -234,7 +248,10 @@ export default function Page() {
         title="7. react-hook-form + Server Action"
         description="For bigger forms: react-hook-form validates in the browser, the Server Action validates again with the same zod schema and saves."
       >
-        <Link href="/examples/mutating-data/hook-form" className={`inline-block ${buttonClass}`}>
+        <Link
+          href="/examples/mutating-data/hook-form"
+          className={`inline-block ${buttonClass}`}
+        >
           Open the react-hook-form page →
         </Link>
       </Section>

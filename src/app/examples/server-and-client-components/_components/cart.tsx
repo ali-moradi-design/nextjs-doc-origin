@@ -19,7 +19,8 @@ export default async function Cart() {
         ))}
       </ul>
       <p className="mt-3 text-xs text-zinc-500">
-        Loaded with API key <span className="font-mono">{getMaskedApiKey()}</span>
+        Loaded with API key{" "}
+        <span className="font-mono">{getMaskedApiKey()}</span>
       </p>
     </Boundary>
   );

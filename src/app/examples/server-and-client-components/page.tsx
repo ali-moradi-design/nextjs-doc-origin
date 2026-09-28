@@ -24,7 +24,9 @@ function Section({
     <section className="space-y-4 rounded-2xl border border-zinc-200 p-6 dark:border-zinc-800">
       <div className="space-y-1">
         <h2 className="font-semibold">{title}</h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">{description}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          {description}
+        </p>
       </div>
       {children}
     </section>
@@ -50,8 +52,8 @@ export default async function Page() {
           <span className="font-semibold text-sky-600 dark:text-sky-400">
             blue
           </span>{" "}
-          boxes are Client Components. Keep the terminal and the browser
-          console open side by side.
+          boxes are Client Components. Keep the terminal and the browser console
+          open side by side.
         </p>
       </header>
 
@@ -62,8 +64,8 @@ export default async function Page() {
             Refresh the page. <code>[server]</code> logs run only in the
             terminal (in dev, Next.js also replays them in the browser console
             with a grey &quot;Server&quot; badge). <code>[client]</code> logs
-            run in the terminal (server render to HTML) and again in the
-            browser (hydration, then every re-render).
+            run in the terminal (server render to HTML) and again in the browser
+            (hydration, then every re-render).
           </>
         }
       >

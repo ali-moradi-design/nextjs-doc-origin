@@ -14,7 +14,15 @@ async function UncachedBadge({ place }: { place: string }) {
   return <Badge place={place} name={user.name} queryId={user.queryId} />;
 }
 
-function Badge({ place, name, queryId }: { place: string; name: string; queryId: string }) {
+function Badge({
+  place,
+  name,
+  queryId,
+}: {
+  place: string;
+  name: string;
+  queryId: string;
+}) {
   return (
     <li className="flex items-center justify-between gap-4 rounded-xl border border-zinc-200 px-4 py-2 text-sm dark:border-zinc-800">
       <span>
@@ -38,15 +46,17 @@ export default function Page() {
       <PageIntro title="React.cache" expected="~0.3s">
         <p>
           Three components ask for user 1 without React.cache, and three with
-          it. Compare the query ids, then count the <code>queryUser</code>{" "}
-          lines in the terminal: 4 per refresh, not 6.
+          it. Compare the query ids, then count the <code>queryUser</code> lines
+          in the terminal: 4 per refresh, not 6.
         </p>
       </PageIntro>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <section className="space-y-3">
           <h2 className="font-semibold">Without React.cache</h2>
-          <Suspense fallback={<p className="text-sm text-zinc-500">Loading…</p>}>
+          <Suspense
+            fallback={<p className="text-sm text-zinc-500">Loading…</p>}
+          >
             <ul className="space-y-2">
               {places.map((place) => (
                 <UncachedBadge key={place} place={place} />
@@ -60,7 +70,9 @@ export default function Page() {
 
         <section className="space-y-3">
           <h2 className="font-semibold">With React.cache</h2>
-          <Suspense fallback={<p className="text-sm text-zinc-500">Loading…</p>}>
+          <Suspense
+            fallback={<p className="text-sm text-zinc-500">Loading…</p>}
+          >
             <ul className="space-y-2">
               {places.map((place) => (
                 <CachedBadge key={place} place={place} />

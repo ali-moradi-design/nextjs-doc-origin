@@ -17,7 +17,8 @@ export default function PostList({
   const [tag, setTag] = useState("all");
 
   const tags = ["all", ...new Set(allPosts.map((post) => post.tag))];
-  const visible = tag === "all" ? allPosts : allPosts.filter((post) => post.tag === tag);
+  const visible =
+    tag === "all" ? allPosts : allPosts.filter((post) => post.tag === tag);
 
   return (
     <section className="space-y-4 rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">

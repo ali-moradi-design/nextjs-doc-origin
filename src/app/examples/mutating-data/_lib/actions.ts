@@ -70,7 +70,9 @@ export async function createNoteAndRedirect(formData: FormData) {
 
   const result = db.parseNoteText(formData.get("text"));
   if (result.error !== undefined) {
-    redirect(`/examples/mutating-data/new?error=${encodeURIComponent(result.error)}`);
+    redirect(
+      `/examples/mutating-data/new?error=${encodeURIComponent(result.error)}`,
+    );
   }
 
   db.addNote(result.text);
@@ -88,7 +90,9 @@ export async function createNoteAndRedirect(formData: FormData) {
 // Used with react-hook-form. Receives a plain object, not FormData. The
 // type is `unknown` on purpose: anyone can POST anything to this action,
 // so the server validates again with the same schema the form used.
-export async function createNoteFromHookForm(input: unknown): Promise<NoteResult> {
+export async function createNoteFromHookForm(
+  input: unknown,
+): Promise<NoteResult> {
   await db.sleep();
 
   const result = noteSchema.safeParse(input);
@@ -99,7 +103,10 @@ export async function createNoteFromHookForm(input: unknown): Promise<NoteResult
   const { title, content } = result.data;
   // A rule the browser can't check on its own.
   if (db.titleExists(title)) {
-    return { ok: false, errors: { title: ["A note with this title already exists."] } };
+    return {
+      ok: false,
+      errors: { title: ["A note with this title already exists."] },
+    };
   }
 
   db.addNote(content ? `${title} — ${content}` : title);

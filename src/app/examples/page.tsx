@@ -4,27 +4,32 @@ const examples = [
   {
     href: "/examples/linking-and-navigating",
     title: "Linking and Navigating",
-    description: "Prefetching, streaming, client-side transitions, useLinkStatus.",
+    description:
+      "Prefetching, streaming, client-side transitions, useLinkStatus.",
   },
   {
     href: "/examples/server-and-client-components",
     title: "Server and Client Components",
-    description: "use client boundary, props, interleaving, context, server-only.",
+    description:
+      "use client boundary, props, interleaving, context, server-only.",
   },
   {
     href: "/examples/fetching-data",
     title: "Fetching Data",
-    description: "Blocking vs parallel, streaming with Suspense, use(), React.cache.",
+    description:
+      "Blocking vs parallel, streaming with Suspense, use(), React.cache.",
   },
   {
     href: "/examples/mutating-data",
     title: "Mutating Data",
-    description: "Server Actions: forms, useActionState, onClick, useEffect, cookies, redirect.",
+    description:
+      "Server Actions: forms, useActionState, onClick, useEffect, cookies, redirect.",
   },
   {
     href: "/examples/caching",
     title: "Caching",
-    description: "Cache Components: use cache, cacheLife, static shell, Suspense, cache keys.",
+    description:
+      "Cache Components: use cache, cacheLife, static shell, Suspense, cache keys.",
   },
 ];
 

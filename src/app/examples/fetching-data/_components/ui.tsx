@@ -18,7 +18,9 @@ export function PageIntro({
           expected: {expected}
         </span>
       </div>
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-400">{children}</div>
+      <div className="space-y-2 text-zinc-600 dark:text-zinc-400">
+        {children}
+      </div>
     </header>
   );
 }
@@ -68,7 +70,11 @@ export function CardSkeleton({ title }: { title: string }) {
   );
 }
 
-export function List({ items }: { items: { id: string; label: string; meta: string }[] }) {
+export function List({
+  items,
+}: {
+  items: { id: string; label: string; meta: string }[];
+}) {
   return (
     <ul className="divide-y divide-zinc-100 text-sm dark:divide-zinc-800">
       {items.map((item) => (

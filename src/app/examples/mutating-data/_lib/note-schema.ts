@@ -9,7 +9,10 @@ export const noteSchema = z.object({
     .trim()
     .min(1, "Title is required.")
     .max(40, "Title must be 40 characters or less."),
-  content: z.string().trim().max(120, "Details must be 120 characters or less."),
+  content: z
+    .string()
+    .trim()
+    .max(120, "Details must be 120 characters or less."),
 });
 
 export type NoteInput = z.infer<typeof noteSchema>;

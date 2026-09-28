@@ -16,13 +16,13 @@ Update this file at the end of every lesson.
 
 ## Lessons done (docs: Getting Started)
 
-| # | Docs page | Example |
-| - | --------- | ------- |
-| 4 | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating` |
-| 5 | Server and Client Components | `/examples/server-and-client-components` |
-| 6 | Fetching Data (incl. Preloading) | `/examples/fetching-data` |
-| 7 | Mutating Data (+ react-hook-form, pros/cons guide) | `/examples/mutating-data` |
-| 8 | Caching | `/examples/caching` |
+| #   | Docs page                                                    | Example                                  |
+| --- | ------------------------------------------------------------ | ---------------------------------------- |
+| 4   | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating`       |
+| 5   | Server and Client Components                                 | `/examples/server-and-client-components` |
+| 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                |
+| 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                |
+| 8   | Caching                                                      | `/examples/caching`                      |
 
 ## Next lesson
 

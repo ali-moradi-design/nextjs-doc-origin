@@ -19,7 +19,12 @@ function linkClass(isActive: boolean) {
   }`;
 }
 
-function NavLinkView({ href, label, prefetch, isActive }: NavLinkProps & { isActive: boolean }) {
+function NavLinkView({
+  href,
+  label,
+  prefetch,
+  isActive,
+}: NavLinkProps & { isActive: boolean }) {
   return (
     <Link href={href} prefetch={prefetch} className={linkClass(isActive)}>
       {label}

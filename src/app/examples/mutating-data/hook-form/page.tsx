@@ -22,12 +22,17 @@ export default function Page() {
 
       <ol className="list-decimal space-y-1 pl-5 text-sm text-zinc-600 dark:text-zinc-400">
         <li>Click into Title, then out of it: the browser shows the error.</li>
-        <li>Type more than 120 characters in Details: the counter turns red.</li>
+        <li>
+          Type more than 120 characters in Details: the counter turns red.
+        </li>
         <li>
           Save a note titled <q>Server Actions run on the server</q>: only the
           server knows it already exists.
         </li>
-        <li>Click the second button: bad data skips the browser, the server still refuses it.</li>
+        <li>
+          Click the second button: bad data skips the browser, the server still
+          refuses it.
+        </li>
       </ol>
 
       <section className="rounded-2xl border border-zinc-200 p-6 dark:border-zinc-800">

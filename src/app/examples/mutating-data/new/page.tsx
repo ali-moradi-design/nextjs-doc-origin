@@ -14,8 +14,9 @@ async function ErrorMessage({
   return <p className="text-sm text-red-600 dark:text-red-400">{error}</p>;
 }
 
-export default function Page({ searchParams }: PageProps<"/examples/mutating-data/new">) {
-
+export default function Page({
+  searchParams,
+}: PageProps<"/examples/mutating-data/new">) {
   return (
     <main className="mx-auto w-full max-w-xl flex-1 space-y-6 px-4 py-8 sm:px-6">
       <Link
@@ -26,9 +27,9 @@ export default function Page({ searchParams }: PageProps<"/examples/mutating-dat
       </Link>
       <h1 className="text-3xl font-semibold tracking-tight">New note</h1>
       <p className="text-zinc-600 dark:text-zinc-400">
-        After saving, the action redirects you to a static (cached) list.
-        Try it once with the box checked and once without, in production
-        (<code>pnpm build</code> then <code>pnpm start</code>).
+        After saving, the action redirects you to a static (cached) list. Try it
+        once with the box checked and once without, in production (
+        <code>pnpm build</code> then <code>pnpm start</code>).
       </p>
 
       <form action={createNoteAndRedirect} className="space-y-3">
@@ -40,7 +41,12 @@ export default function Page({ searchParams }: PageProps<"/examples/mutating-dat
           className="w-full rounded-lg border border-zinc-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-500 dark:border-zinc-700"
         />
         <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="revalidate" defaultChecked className="size-4" />
+          <input
+            type="checkbox"
+            name="revalidate"
+            defaultChecked
+            className="size-4"
+          />
           Call <code>revalidatePath()</code> for the static list
         </label>
         <Suspense>

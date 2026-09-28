@@ -17,11 +17,13 @@ type Kind = "static" | "cached" | "request";
 const kinds: Record<Kind, { label: string; className: string }> = {
   static: {
     label: "Static shell",
-    className: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300",
+    className:
+      "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300",
   },
   cached: {
     label: "Cached",
-    className: "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900/50 dark:text-fuchsia-300",
+    className:
+      "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900/50 dark:text-fuchsia-300",
   },
   request: {
     label: "Request time",
@@ -31,7 +33,9 @@ const kinds: Record<Kind, { label: string; className: string }> = {
 
 function Tag({ kind }: { kind: Kind }) {
   return (
-    <span className={`rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold ${kinds[kind].className}`}>
+    <span
+      className={`rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold ${kinds[kind].className}`}
+    >
       {kinds[kind].label}
     </span>
   );
@@ -66,7 +70,9 @@ function Skeleton({ title }: { title: string }) {
     >
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-medium text-zinc-400">{title}</h3>
-        <span className="animate-pulse font-mono text-[11px] text-zinc-500">streaming…</span>
+        <span className="animate-pulse font-mono text-[11px] text-zinc-500">
+          streaming…
+        </span>
       </div>
       <div className="h-10 animate-pulse rounded bg-zinc-100 dark:bg-zinc-900" />
     </div>
@@ -86,7 +92,9 @@ function Section({
     <section className="space-y-4 rounded-2xl border border-zinc-200 p-6 dark:border-zinc-800">
       <div className="space-y-1">
         <h2 className="font-semibold">{title}</h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">{description}</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          {description}
+        </p>
       </div>
       {children}
     </section>
@@ -115,7 +123,9 @@ const shippingRules = [
   { region: "Americas", days: 5 },
   { region: "Asia", days: 7 },
 ];
-const averageDays = shippingRules.reduce((sum, rule) => sum + rule.days, 0) / shippingRules.length;
+const averageDays =
+  shippingRules.reduce((sum, rule) => sum + rule.days, 0) /
+  shippingRules.length;
 
 // ─── 2. Data-level caching ────────────────────────────────────────────
 
@@ -125,7 +135,8 @@ async function CachedProducts() {
     <Card kind="cached" title='getProducts() with "use cache"'>
       <ProductList products={products} />
       <p className="text-zinc-500">
-        Loaded at <span className="font-mono">{loadedAt}</span>. Refresh: this time doesn&apos;t change.
+        Loaded at <span className="font-mono">{loadedAt}</span>. Refresh: this
+        time doesn&apos;t change.
       </p>
     </Card>
   );
@@ -137,7 +148,8 @@ async function UncachedProducts() {
     <Card kind="request" title="Same query, no cache">
       <ProductList products={products} />
       <p className="text-zinc-500">
-        Loaded at <span className="font-mono">{loadedAt}</span>. Refresh: 1.5s wait and a new time, every time.
+        Loaded at <span className="font-mono">{loadedAt}</span>. Refresh: 1.5s
+        wait and a new time, every time.
       </p>
     </Card>
   );
@@ -155,7 +167,8 @@ async function CachedBanner() {
     <Card kind="cached" title='A component with "use cache"'>
       <p>🎉 Free shipping on orders over $100 this week.</p>
       <p className="text-zinc-500">
-        Rendered at <span className="font-mono">{renderedAt}</span> (frozen for a day).
+        Rendered at <span className="font-mono">{renderedAt}</span> (frozen for
+        a day).
       </p>
     </Card>
   );
@@ -167,9 +180,14 @@ const currencies = ["USD", "EUR", "GBP"];
 
 // Not cached: reads searchParams (runtime data), then passes the plain
 // value to a cached function. The currency becomes part of the cache key.
-async function Prices({ searchParams }: { searchParams: PageProps<"/examples/caching">["searchParams"] }) {
+async function Prices({
+  searchParams,
+}: {
+  searchParams: PageProps<"/examples/caching">["searchParams"];
+}) {
   const { currency: raw } = await searchParams;
-  const currency = typeof raw === "string" && currencies.includes(raw) ? raw : "USD";
+  const currency =
+    typeof raw === "string" && currencies.includes(raw) ? raw : "USD";
   const { rate, loadedAt } = await getRate(currency);
 
   return (
@@ -178,7 +196,8 @@ async function Prices({ searchParams }: { searchParams: PageProps<"/examples/cac
         {(89 * rate).toFixed(2)} {currency}
       </p>
       <p className="text-zinc-500">
-        Rate for {currency} loaded at <span className="font-mono">{loadedAt}</span>
+        Rate for {currency} loaded at{" "}
+        <span className="font-mono">{loadedAt}</span>
       </p>
     </Card>
   );
@@ -190,7 +209,7 @@ async function RequestInfo() {
   const userAgent = (await headers()).get("user-agent") ?? "unknown";
   return (
     <Card kind="request" title="headers() is different for every visitor">
-      <p className="break-all font-mono text-xs text-zinc-500">{userAgent}</p>
+      <p className="font-mono text-xs break-all text-zinc-500">{userAgent}</p>
     </Card>
   );
 }
@@ -202,7 +221,9 @@ async function RequestId() {
   return (
     <Card kind="request" title="Random per request">
       <p className="font-mono">{crypto.randomUUID().slice(0, 8)}</p>
-      <p className="text-zinc-500">connection() + Suspense. Changes on every refresh.</p>
+      <p className="text-zinc-500">
+        connection() + Suspense. Changes on every refresh.
+      </p>
     </Card>
   );
 }
@@ -213,7 +234,9 @@ async function SharedId() {
   return (
     <Card kind="cached" title="Random, but cached">
       <p className="font-mono">{crypto.randomUUID().slice(0, 8)}</p>
-      <p className="text-zinc-500">&quot;use cache&quot;. The same for everyone until it expires.</p>
+      <p className="text-zinc-500">
+        &quot;use cache&quot;. The same for everyone until it expires.
+      </p>
     </Card>
   );
 }
@@ -267,7 +290,9 @@ export default function Page({ searchParams }: PageProps<"/examples/caching">) {
               </li>
             ))}
           </ul>
-          <p className="text-zinc-500">Average: {averageDays} days (computed at build time).</p>
+          <p className="text-zinc-500">
+            Average: {averageDays} days (computed at build time).
+          </p>
         </Card>
       </Section>
 

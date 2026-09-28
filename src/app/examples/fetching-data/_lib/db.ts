@@ -4,7 +4,12 @@ import "server-only";
 import { connection } from "next/server";
 import { cache } from "react";
 
-export type Artist = { id: string; username: string; name: string; genre: string };
+export type Artist = {
+  id: string;
+  username: string;
+  name: string;
+  genre: string;
+};
 export type Album = { id: string; title: string; year: number };
 export type Track = { id: string; title: string; plays: string };
 export type Playlist = { id: string; name: string; tracks: number };

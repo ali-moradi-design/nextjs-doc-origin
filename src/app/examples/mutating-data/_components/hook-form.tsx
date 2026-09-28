@@ -4,7 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { createNoteFromHookForm } from "../_lib/actions";
-import { noteSchema, type NoteInput, type NoteResult } from "../_lib/note-schema";
+import {
+  noteSchema,
+  type NoteInput,
+  type NoteResult,
+} from "../_lib/note-schema";
 
 const fieldClass =
   "w-full rounded-lg border bg-transparent px-3 py-2 text-sm outline-none focus:border-zinc-500";
@@ -50,7 +54,10 @@ export default function HookForm() {
   // Pretend to be an attacker who skips the form and posts bad data.
   async function sendInvalidData() {
     setSuccess("");
-    const result = await createNoteFromHookForm({ title: "", content: "x".repeat(200) });
+    const result = await createNoteFromHookForm({
+      title: "",
+      content: "x".repeat(200),
+    });
     showServerErrors(result);
   }
 
@@ -71,14 +78,17 @@ export default function HookForm() {
           className={`${fieldClass} ${errors.title ? "border-red-500" : "border-zinc-300 dark:border-zinc-700"}`}
         />
         {errors.title && (
-          <p className="text-sm text-red-600 dark:text-red-400">{errors.title.message}</p>
+          <p className="text-sm text-red-600 dark:text-red-400">
+            {errors.title.message}
+          </p>
         )}
       </div>
 
       <div className="space-y-1">
         <div className="flex justify-between">
           <label htmlFor="hf-content" className="text-sm font-medium">
-            Details <span className="font-normal text-zinc-500">(optional)</span>
+            Details{" "}
+            <span className="font-normal text-zinc-500">(optional)</span>
           </label>
           <span
             className={`font-mono text-xs ${contentLength > 120 ? "text-red-600 dark:text-red-400" : "text-zinc-500"}`}
@@ -94,14 +104,21 @@ export default function HookForm() {
           className={`${fieldClass} ${errors.content ? "border-red-500" : "border-zinc-300 dark:border-zinc-700"}`}
         />
         {errors.content && (
-          <p className="text-sm text-red-600 dark:text-red-400">{errors.content.message}</p>
+          <p className="text-sm text-red-600 dark:text-red-400">
+            {errors.content.message}
+          </p>
         )}
       </div>
 
       {errors.root && (
-        <p className="text-sm text-red-600 dark:text-red-400">{errors.root.message}</p>
+        <p className="text-sm text-red-600 dark:text-red-400">
+          {errors.root.message}
+        </p>
       )}
-      <p aria-live="polite" className="min-h-5 text-sm text-emerald-600 dark:text-emerald-400">
+      <p
+        aria-live="polite"
+        className="min-h-5 text-sm text-emerald-600 dark:text-emerald-400"
+      >
         {success}
       </p>
 

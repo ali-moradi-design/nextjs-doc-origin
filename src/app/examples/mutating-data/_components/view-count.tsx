@@ -19,7 +19,9 @@ export default function ViewCount({ initialViews }: { initialViews: number }) {
   return (
     <p className="text-sm">
       Total views: <span className="font-mono tabular-nums">{views}</span>
-      {isPending && <span className="ml-2 text-xs text-zinc-500">counting…</span>}
+      {isPending && (
+        <span className="ml-2 text-xs text-zinc-500">counting…</span>
+      )}
     </p>
   );
 }

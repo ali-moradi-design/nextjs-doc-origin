@@ -27,7 +27,9 @@ export default function ProductDetails({
           >
             {mode} route
           </span>
-          <span className="text-xs text-zinc-500">Rendered at {renderedAt}</span>
+          <span className="text-xs text-zinc-500">
+            Rendered at {renderedAt}
+          </span>
         </div>
         <h2 className="text-2xl font-semibold">{product.name}</h2>
         <p className="text-lg text-zinc-600 dark:text-zinc-400">

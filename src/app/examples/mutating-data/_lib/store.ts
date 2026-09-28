@@ -12,7 +12,11 @@ const globalStore = globalThis as typeof globalThis & { mutatingStore?: Store };
 const store = (globalStore.mutatingStore ??= {
   notes: [
     { id: "1", text: "Server Actions run on the server", createdAt: "09:00" },
-    { id: "2", text: "Forms work even before JavaScript loads", createdAt: "09:05" },
+    {
+      id: "2",
+      text: "Forms work even before JavaScript loads",
+      createdAt: "09:05",
+    },
   ],
   likes: 0,
   views: 0,
