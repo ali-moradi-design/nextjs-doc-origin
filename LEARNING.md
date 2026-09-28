@@ -17,20 +17,20 @@ Update this file at the end of every lesson.
 
 ## Lessons done (docs: Getting Started)
 
-| #   | Docs page                                                    | Example                                         |
-| --- | ------------------------------------------------------------ | ----------------------------------------------- |
-| 4   | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating`              |
-| 5   | Server and Client Components                                 | `/examples/server-and-client-components`        |
-| 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                       |
-| 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                       |
-| 8   | Caching (Cache Components)                                   | `/examples/caching` (branch `cache-components`) |
-| 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                      |
-| 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                 |
+| #   | Docs page                                                    | Example                                              |
+| --- | ------------------------------------------------------------ | ---------------------------------------------------- |
+| 4   | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating`                   |
+| 5   | Server and Client Components                                 | `/examples/server-and-client-components`             |
+| 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                            |
+| 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                            |
+| 8   | Caching (Cache Components)                                   | `/examples/caching` (branch `cache-components`)      |
+| 9   | Revalidating                                                 | `/examples/revalidating` (branch `cache-components`) |
+| 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                           |
+| 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                      |
 
 ## Next lesson
 
-9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
-   (skipped for now; lessons 10 and 11 were done first). After it: 12. Images.
+12. Images: `node_modules/next/dist/docs/01-app/01-getting-started/12-images.md`
 
 ## Things learned the hard way
 
@@ -39,6 +39,11 @@ Update this file at the end of every lesson.
   the old page mounted but hidden (`<Activity>`); streamed `<Suspense>`
   content needs JavaScript; `use cache` entries survive a `pnpm start`
   restart until the next build.
+- Revalidating (branch `cache-components`): `revalidateTag` in a Server
+  Action does not re-render the page, while `updateTag`, `revalidatePath`
+  and `refresh()` do. With `"max"` a reload can still show the stale value
+  once. On that branch, shared UI (`Card`, `Section`, `Skeleton`, `Tag`)
+  lives in `src/app/_components/ui`.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.
 - Tailwind v4: config is in CSS (`@theme`, `@utility`, `@custom-variant`,
