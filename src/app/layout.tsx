@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { InlineScript } from "./_components/inline-script";
 import ThemeProvider from "./_components/theme-provider";
 import ThemeToggle from "./_components/theme-toggle";
 import { themeScript } from "./_lib/theme";
@@ -33,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Runs before the first paint. Reading cookies() here instead would
             make every page in the app dynamic. */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <InlineScript html={themeScript} />
       </head>
       <body className="flex min-h-full flex-col">
         {/* Interleaving: pages stay Server Components inside the provider. */}
