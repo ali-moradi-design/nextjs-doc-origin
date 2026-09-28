@@ -1,0 +1,6 @@
+/* A global stylesheet imported by one page only. React does not remove it
+   when you navigate away, so it keeps applying on other pages. */
+.leak-target {
+  outline: 3px dashed oklch(0.63 0.24 25);
+  outline-offset: 4px;
+}

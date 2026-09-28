@@ -1,0 +1,7 @@
+.button {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  background: oklch(0.55 0 0);
+  color: white;
+}

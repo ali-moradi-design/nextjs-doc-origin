@@ -25,11 +25,12 @@ Update this file at the end of every lesson.
 | 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                       |
 | 8   | Caching (Cache Components)                                   | `/examples/caching` (branch `cache-components`) |
 | 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                      |
+| 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                 |
 
 ## Next lesson
 
 9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
-   (skipped for now; lesson 10 was done first). After it: 11. CSS.
+   (skipped for now; lessons 10 and 11 were done first). After it: 12. Images.
 
 ## Things learned the hard way
 
@@ -40,6 +41,14 @@ Update this file at the end of every lesson.
   restart until the next build.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.
+- Tailwind v4: config is in CSS (`@theme`, `@utility`, `@custom-variant`,
+  `@source`), no `tailwind.config.js`. Example tokens live in `globals.css`.
+- A global CSS file imported by one page stays loaded after client-side
+  navigation (until a full reload).
+- `experimental.cssChunking`: with Turbopack only `true` (default) and
+  `'graph'` apply. Here `'graph'` gave the same chunks as `true`;
+  `{ type: "graph", requestCost: 0 }` split `/examples/css` from 2 to 7
+  CSS files.
 - Error boundaries in 16.3 get `retry` (re-fetches from the server) and
   `reset` (no re-fetch). `catchError` from `next/error` types `error` as
   `unknown`. In production, a Server Component error reaches the client as

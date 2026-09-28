@@ -31,6 +31,12 @@ const examples = [
     description:
       "Expected errors, notFound, error.tsx, catchError, global-error.",
   },
+  {
+    href: "/examples/css",
+    title: "CSS",
+    description:
+      "Tailwind v4 (@theme, @utility), CSS Modules, global CSS, import order, cssChunking.",
+  },
 ];
 
 export default function Page() {

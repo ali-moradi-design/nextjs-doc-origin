@@ -1,0 +1,6 @@
+.card {
+  border-radius: 1rem;
+  padding: 1rem;
+  background: oklch(0.9 0.08 160);
+  color: oklch(0.3 0.08 160);
+}

@@ -1,0 +1,5 @@
+/* Same specificity as .button in base-button.module.css. This file is
+   imported after BaseButton, so its rules come later and win. */
+.primary {
+  background: var(--color-brand);
+}

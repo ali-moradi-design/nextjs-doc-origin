@@ -86,3 +86,23 @@ body {
     opacity: 0.2;
   }
 }
+
+/* ----- Tailwind v4 config lives in CSS (used by /examples/css) ----- */
+
+/* Design tokens: each variable also creates utilities, e.g. bg-brand,
+   text-brand, border-brand, font-display. */
+@theme {
+  --color-brand: oklch(0.62 0.2 300);
+  --color-brand-soft: oklch(0.93 0.05 300);
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
+/* A custom utility. Unlike a plain class, it works with variants:
+   hover:striped, md:striped, dark:striped. */
+@utility striped {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 8px,
+    color-mix(in oklch, currentColor 15%, transparent) 8px 16px
+  );
+}
