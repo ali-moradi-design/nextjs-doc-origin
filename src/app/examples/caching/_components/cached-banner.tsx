@@ -1,5 +1,5 @@
 import { cacheLife } from "next/cache";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 // "use cache" on a component: its whole rendered output is stored.
 export async function CachedBanner() {

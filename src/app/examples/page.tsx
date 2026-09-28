@@ -31,6 +31,12 @@ const examples = [
     description:
       "Cache Components: use cache, cacheLife, static shell, Suspense, cache keys.",
   },
+  {
+    href: "/examples/revalidating",
+    title: "Revalidating",
+    description:
+      "cacheLife, cacheTag, updateTag, revalidateTag, revalidatePath, webhook.",
+  },
 ];
 
 export default function Page() {

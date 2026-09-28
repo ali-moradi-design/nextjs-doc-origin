@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 export async function RequestInfo() {
   const userAgent = (await headers()).get("user-agent") ?? "unknown";

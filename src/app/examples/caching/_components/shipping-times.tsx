@@ -1,4 +1,4 @@
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 // Module constants and pure computations give the same result every time,
 // so they are prerendered automatically. No directive needed.

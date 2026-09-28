@@ -1,5 +1,5 @@
 import { currencies, getRate } from "../_lib/data";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 // Not cached: reads searchParams (runtime data), then passes the plain
 // value to a cached function. The currency becomes part of the cache key.

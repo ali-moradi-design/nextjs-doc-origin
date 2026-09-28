@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 export async function RequestId() {
   await connection(); // "make this at request time", then random is allowed

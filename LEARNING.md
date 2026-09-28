@@ -26,7 +26,8 @@ Update this file at the end of every lesson.
 
 ## Next lesson
 
-9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
+10. The next page after Revalidating in
+    `node_modules/next/dist/docs/01-app/01-getting-started/`.
 
 ## Things learned the hard way
 
@@ -37,5 +38,10 @@ Update this file at the end of every lesson.
 - `use cache` entries survive a `pnpm start` restart; a new build resets them.
 - A `<Link>` navigation waits for the slowest part of the new page, which can
   hide a fast cached part (see the currency links in `/examples/caching`).
+- Revalidating (branch `cache-components`): `revalidateTag` in a Server
+  Action does not re-render the page, while `updateTag`, `revalidatePath`
+  and `refresh()` do. With `"max"` a reload can still show the stale value
+  once. Shared UI (`Card`, `Section`, `Skeleton`, `Tag`) now lives in
+  `src/app/_components/ui`.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.

@@ -1,6 +1,6 @@
 import { getProductsUncached } from "../_lib/data";
 import { ProductList } from "./product-list";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 export async function UncachedProducts() {
   const { products, loadedAt } = await getProductsUncached();

@@ -1,5 +1,5 @@
 import { getStockLevel } from "../_lib/data";
-import { Card } from "./ui/card";
+import { Card } from "@/src/app/_components/ui/card";
 
 export async function StockLevel() {
   const { inStock, loadedAt } = await getStockLevel();

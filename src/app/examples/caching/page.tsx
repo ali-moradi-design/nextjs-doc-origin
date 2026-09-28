@@ -9,9 +9,9 @@ import { SharedId } from "./_components/shared-id";
 import { ShippingTimes } from "./_components/shipping-times";
 import { StockLevel } from "./_components/stock-level";
 import { UncachedProducts } from "./_components/uncached-products";
-import { Section } from "./_components/ui/section";
-import { Skeleton } from "./_components/ui/skeleton";
-import { Tag } from "./_components/ui/tag";
+import { Section } from "@/src/app/_components/ui/section";
+import { Skeleton } from "@/src/app/_components/ui/skeleton";
+import { Tag } from "@/src/app/_components/ui/tag";
 
 // Not async and awaits nothing at the top: everything outside <Suspense>
 // becomes the static shell, sent instantly.
