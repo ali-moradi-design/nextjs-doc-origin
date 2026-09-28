@@ -3,7 +3,6 @@ export const tags = {
   posts: "posts",
   price: "price",
   headline: "headline",
-  counter: "counter",
 } as const;
 
 export const pagePath = "/examples/revalidating";

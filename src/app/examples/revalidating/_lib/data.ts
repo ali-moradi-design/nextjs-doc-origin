@@ -3,13 +3,7 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
 import { tags } from "./constants";
-import {
-  readCounter,
-  readHeadline,
-  readPosts,
-  readPrice,
-  sleep,
-} from "./store";
+import { readHeadline, readPosts, readPrice, sleep } from "./store";
 
 function now() {
   return new Date().toLocaleTimeString("en-US");
@@ -57,24 +51,4 @@ export async function getHeadline() {
 
   await sleep(500);
   return { headline: readHeadline(), loadedAt: now() };
-}
-
-// ─── stale: how long the browser keeps a page without asking ─────────
-
-// Same data, same tag, two stale times. revalidate and expire are long, so
-// only the webhook changes the value on the server.
-export async function getCounterShortStale() {
-  "use cache";
-  cacheLife({ stale: 30, revalidate: 3600, expire: 86400 });
-  cacheTag(tags.counter);
-
-  return { value: readCounter(), loadedAt: now() };
-}
-
-export async function getCounterLongStale() {
-  "use cache";
-  cacheLife({ stale: 300, revalidate: 3600, expire: 86400 });
-  cacheTag(tags.counter);
-
-  return { value: readCounter(), loadedAt: now() };
 }

@@ -16,7 +16,6 @@ type Store = {
   posts: Post[];
   price: number;
   headline: number;
-  counter: number;
 };
 
 export const headlines = [
@@ -33,7 +32,6 @@ const initialStore: Store = {
   ],
   price: 100,
   headline: 0,
-  counter: 1,
 };
 
 const dataDir = path.join(process.cwd(), ".data");
@@ -84,16 +82,4 @@ export function nextHeadline() {
   const store = load();
   store.headline = (store.headline + 1) % headlines.length;
   save(store);
-}
-
-export function readCounter() {
-  console.log("[db] readCounter()");
-  return load().counter;
-}
-
-export function increaseCounter() {
-  const store = load();
-  store.counter += 1;
-  save(store);
-  return store.counter;
 }
