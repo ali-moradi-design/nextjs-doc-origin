@@ -1,20 +1,12 @@
 import Link from "next/link";
-import { Suspense } from "react";
 import SubmitButton from "../_components/submit-button";
 import { createNoteAndRedirect } from "../_lib/actions";
 
-// The action redirects back here with ?error=… if the input is invalid.
-// searchParams is request-time data, so with Cache Components it is read
-// inside <Suspense> instead of at the top of the page.
-async function ErrorMessage({
+export default async function Page({
   searchParams,
-}: Pick<PageProps<"/examples/mutating-data/new">, "searchParams">) {
+}: PageProps<"/examples/mutating-data/new">) {
+  // The action redirects back here with ?error=… if the input is invalid.
   const { error } = await searchParams;
-  if (typeof error !== "string") return null;
-  return <p className="text-sm text-red-600 dark:text-red-400">{error}</p>;
-}
-
-export default function Page({ searchParams }: PageProps<"/examples/mutating-data/new">) {
 
   return (
     <main className="mx-auto w-full max-w-xl flex-1 space-y-6 px-4 py-8 sm:px-6">
@@ -43,9 +35,9 @@ export default function Page({ searchParams }: PageProps<"/examples/mutating-dat
           <input type="checkbox" name="revalidate" defaultChecked className="size-4" />
           Call <code>revalidatePath()</code> for the static list
         </label>
-        <Suspense>
-          <ErrorMessage searchParams={searchParams} />
-        </Suspense>
+        {typeof error === "string" && (
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        )}
         <SubmitButton />
       </form>
     </main>
