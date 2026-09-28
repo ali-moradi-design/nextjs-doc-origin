@@ -8,7 +8,13 @@ export function preload(id: string, cached: boolean) {
   void (cached ? getItem(id) : getItemUncached(id));
 }
 
-export default async function Item({ id, cached }: { id: string; cached: boolean }) {
+export default async function Item({
+  id,
+  cached,
+}: {
+  id: string;
+  cached: boolean;
+}) {
   // Same call as in preload(). With React.cache it returns the request that
   // is already running; without it, a brand new query starts now.
   const item = await (cached ? getItem(id) : getItemUncached(id));

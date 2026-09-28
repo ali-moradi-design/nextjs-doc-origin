@@ -58,7 +58,11 @@ export default function Page() {
         <Link href={`${base}/products/3`} className={linkClass}>
           Default (viewport)
         </Link>
-        <Link href={`${base}/products/4`} prefetch={false} className={linkClass}>
+        <Link
+          href={`${base}/products/4`}
+          prefetch={false}
+          className={linkClass}
+        >
           prefetch=&#123;false&#125;
         </Link>
         {/* Each link here points to a product no other link uses. If another
@@ -76,7 +80,11 @@ export default function Page() {
         <Link href={`${base}/slow/2`} className={linkClass}>
           With loading.tsx
         </Link>
-        <Link href={`${base}/blocking/2`} prefetch={false} className={linkClass}>
+        <Link
+          href={`${base}/blocking/2`}
+          prefetch={false}
+          className={linkClass}
+        >
           Without loading.tsx
         </Link>
       </Experiment>

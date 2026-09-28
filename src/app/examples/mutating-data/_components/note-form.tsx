@@ -30,9 +30,13 @@ export default function NoteForm() {
         </button>
       </div>
       <p aria-live="polite" className="min-h-5 text-sm">
-        {state.error && <span className="text-red-600 dark:text-red-400">{state.error}</span>}
+        {state.error && (
+          <span className="text-red-600 dark:text-red-400">{state.error}</span>
+        )}
         {state.message && !state.error && (
-          <span className="text-emerald-600 dark:text-emerald-400">{state.message}</span>
+          <span className="text-emerald-600 dark:text-emerald-400">
+            {state.message}
+          </span>
         )}
       </p>
     </form>

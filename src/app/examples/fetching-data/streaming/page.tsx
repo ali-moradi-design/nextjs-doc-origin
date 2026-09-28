@@ -1,8 +1,18 @@
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { AlbumsCard, ArtistCard, TracksCard } from "../_components/artist-cards";
+import {
+  AlbumsCard,
+  ArtistCard,
+  TracksCard,
+} from "../_components/artist-cards";
 import { CardSkeleton, PageIntro } from "../_components/ui";
-import { elapsed, getAlbums, getArtist, getRequestStart, getTopTracks } from "../_lib/db";
+import {
+  elapsed,
+  getAlbums,
+  getArtist,
+  getRequestStart,
+  getTopTracks,
+} from "../_lib/db";
 
 // Each async component fetches its own data. Siblings render in parallel,
 // so all three queries start at the same time.

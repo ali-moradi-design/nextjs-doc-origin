@@ -3,7 +3,13 @@ import Link from "next/link";
 // A static notes page: the pros and cons of Server Actions, collected from
 // the lesson. No data, no actions, so it ships no JavaScript of its own.
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="space-y-3">
       <h2 className="text-xl font-semibold">{title}</h2>
@@ -35,7 +41,9 @@ function Points({
           </span>
           <div>
             <p className="font-medium">{item.title}</p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">{item.body}</p>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              {item.body}
+            </p>
           </div>
         </li>
       ))}
@@ -162,10 +170,22 @@ export default function Page() {
         <Points
           kind="info"
           items={[
-            { title: "Pending state", body: 'A button that says "Adding…" while the action runs (useActionState, useFormStatus).' },
-            { title: "Messages from the action", body: "Showing the error or success message the action returns." },
-            { title: "Live validation", body: "Checking input while the user types, like a character counter." },
-            { title: "Browser-only steps", body: "A confirm dialog before submitting, like the Clear all button." },
+            {
+              title: "Pending state",
+              body: 'A button that says "Adding…" while the action runs (useActionState, useFormStatus).',
+            },
+            {
+              title: "Messages from the action",
+              body: "Showing the error or success message the action returns.",
+            },
+            {
+              title: "Live validation",
+              body: "Checking input while the user types, like a character counter.",
+            },
+            {
+              title: "Browser-only steps",
+              body: "A confirm dialog before submitting, like the Clear all button.",
+            },
           ]}
         />
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -179,15 +199,31 @@ export default function Page() {
           Still use a Server Action. It calls your API with fetch instead of
           querying a database. This pattern is called Backend for Frontend:
         </p>
-        <Code>{"Browser  →  Next.js server (Server Action)  →  Your API  →  Database"}</Code>
+        <Code>
+          {
+            "Browser  →  Next.js server (Server Action)  →  Your API  →  Database"
+          }
+        </Code>
         <Code>{apiActionCode}</Code>
         <Points
           kind="pro"
           items={[
-            { title: "Secrets stay secret", body: "The API URL and keys live in process.env on the server, never in browser code." },
-            { title: "No CORS problems", body: "Server-to-server requests are not limited by the browser's CORS rules." },
-            { title: "Safer login tokens", body: "Keep the token in an httpOnly cookie. Browser JavaScript can't read it, so injected scripts can't steal it. The action reads it with cookies()." },
-            { title: "Everything else still works", body: "No-JavaScript forms, refresh() / revalidatePath(), pending states with useActionState." },
+            {
+              title: "Secrets stay secret",
+              body: "The API URL and keys live in process.env on the server, never in browser code.",
+            },
+            {
+              title: "No CORS problems",
+              body: "Server-to-server requests are not limited by the browser's CORS rules.",
+            },
+            {
+              title: "Safer login tokens",
+              body: "Keep the token in an httpOnly cookie. Browser JavaScript can't read it, so injected scripts can't steal it. The action reads it with cookies().",
+            },
+            {
+              title: "Everything else still works",
+              body: "No-JavaScript forms, refresh() / revalidatePath(), pending states with useActionState.",
+            },
           ]}
         />
       </Section>
@@ -196,11 +232,26 @@ export default function Page() {
         <Points
           kind="con"
           items={[
-            { title: "Large file uploads", body: "Server Action request bodies are limited to 1MB by default (serverActions.bodySizeLimit in next.config can raise it). For big files, upload straight from the browser to a storage service." },
-            { title: "Upload progress bars", body: "When the user needs to see upload percentage." },
-            { title: "Real-time connections", body: "Chat, live notifications, WebSockets." },
-            { title: "Public APIs with no secrets", body: "When the API is designed for browsers and nothing needs hiding." },
-            { title: "Fetching data", body: "Server Actions run one at a time and are meant for changes. To read data, fetch it in a Server Component instead." },
+            {
+              title: "Large file uploads",
+              body: "Server Action request bodies are limited to 1MB by default (serverActions.bodySizeLimit in next.config can raise it). For big files, upload straight from the browser to a storage service.",
+            },
+            {
+              title: "Upload progress bars",
+              body: "When the user needs to see upload percentage.",
+            },
+            {
+              title: "Real-time connections",
+              body: "Chat, live notifications, WebSockets.",
+            },
+            {
+              title: "Public APIs with no secrets",
+              body: "When the API is designed for browsers and nothing needs hiding.",
+            },
+            {
+              title: "Fetching data",
+              body: "Server Actions run one at a time and are meant for changes. To read data, fetch it in a Server Component instead.",
+            },
           ]}
         />
       </Section>
@@ -209,10 +260,22 @@ export default function Page() {
         <Points
           kind="info"
           items={[
-            { title: "Anyone can call it", body: "Server Actions are reachable with a direct POST request, not only through your UI." },
-            { title: "Check who is calling", body: "Verify authentication (logged in?) and authorization (allowed to do this?) at the top of every action." },
-            { title: "Validate input on the server", body: "Client-side validation is only for convenience. Users can bypass it." },
-            { title: "Hide internal errors", body: "Return a friendly message instead of the raw error from your database or API." },
+            {
+              title: "Anyone can call it",
+              body: "Server Actions are reachable with a direct POST request, not only through your UI.",
+            },
+            {
+              title: "Check who is calling",
+              body: "Verify authentication (logged in?) and authorization (allowed to do this?) at the top of every action.",
+            },
+            {
+              title: "Validate input on the server",
+              body: "Client-side validation is only for convenience. Users can bypass it.",
+            },
+            {
+              title: "Hide internal errors",
+              body: "Return a friendly message instead of the raw error from your database or API.",
+            },
           ]}
         />
       </Section>

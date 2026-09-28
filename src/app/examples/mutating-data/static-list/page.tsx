@@ -34,7 +34,9 @@ export default function Page() {
             {note.text}
           </li>
         ))}
-        {notes.length === 0 && <li className="py-2 text-sm text-zinc-500">No notes.</li>}
+        {notes.length === 0 && (
+          <li className="py-2 text-sm text-zinc-500">No notes.</li>
+        )}
       </ul>
 
       <Link

@@ -1,7 +1,17 @@
 import { connection } from "next/server";
-import { AlbumsCard, ArtistCard, TracksCard } from "../_components/artist-cards";
+import {
+  AlbumsCard,
+  ArtistCard,
+  TracksCard,
+} from "../_components/artist-cards";
 import { PageIntro } from "../_components/ui";
-import { elapsed, getAlbums, getArtist, getRequestStart, getTopTracks } from "../_lib/db";
+import {
+  elapsed,
+  getAlbums,
+  getArtist,
+  getRequestStart,
+  getTopTracks,
+} from "../_lib/db";
 
 export default async function Page() {
   await connection();

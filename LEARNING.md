@@ -17,18 +17,17 @@ Update this file at the end of every lesson.
 
 ## Lessons done (docs: Getting Started)
 
-| # | Docs page | Example |
-| - | --------- | ------- |
-| 4 | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating` |
-| 5 | Server and Client Components | `/examples/server-and-client-components` |
-| 6 | Fetching Data (incl. Preloading) | `/examples/fetching-data` |
-| 7 | Mutating Data (+ react-hook-form, pros/cons guide) | `/examples/mutating-data` |
-| 8 | Caching: explained once, not understood yet | branch `cache-components` |
+| #   | Docs page                                                    | Example                                  |
+| --- | ------------------------------------------------------------ | ---------------------------------------- |
+| 4   | Linking and Navigating (incl. Server Rendering, Prefetching) | `/examples/linking-and-navigating`       |
+| 5   | Server and Client Components                                 | `/examples/server-and-client-components` |
+| 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                |
+| 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                |
+| 8   | Caching: explained once, not understood yet                  | branch `cache-components`                |
 
 ## Next lesson
 
-Re-explain Caching (lesson 8) in a simpler way. Then:
-9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
+Re-explain Caching (lesson 8) in a simpler way. Then: 9. Revalidating: `node_modules/next/dist/docs/01-app/01-getting-started/09-revalidating.md`
 
 ## Things learned the hard way
 

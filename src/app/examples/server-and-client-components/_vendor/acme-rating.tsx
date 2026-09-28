@@ -19,7 +19,9 @@ export function Rating({ max = 5 }: { max?: number }) {
             aria-label={`${star} stars`}
             onClick={() => setValue(star)}
             className={`text-2xl transition-transform hover:scale-110 ${
-              star <= value ? "text-amber-400" : "text-zinc-300 dark:text-zinc-700"
+              star <= value
+                ? "text-amber-400"
+                : "text-zinc-300 dark:text-zinc-700"
             }`}
           >
             ★

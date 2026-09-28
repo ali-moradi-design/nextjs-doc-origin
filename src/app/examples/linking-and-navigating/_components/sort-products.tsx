@@ -63,7 +63,7 @@ export default function SortProducts() {
           <li key={product.id} className="flex items-center gap-4 p-4">
             <span className={`size-8 rounded-lg ${product.color}`} />
             <span className="flex-1 font-medium">{product.name}</span>
-            <span className="tabular-nums text-zinc-600 dark:text-zinc-400">
+            <span className="text-zinc-600 tabular-nums dark:text-zinc-400">
               ${product.price}
             </span>
           </li>

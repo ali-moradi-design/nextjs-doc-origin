@@ -18,9 +18,9 @@ export default async function Page({
       </Link>
       <h1 className="text-3xl font-semibold tracking-tight">New note</h1>
       <p className="text-zinc-600 dark:text-zinc-400">
-        After saving, the action redirects you to a static (cached) list.
-        Try it once with the box checked and once without, in production
-        (<code>pnpm build</code> then <code>pnpm start</code>).
+        After saving, the action redirects you to a static (cached) list. Try it
+        once with the box checked and once without, in production (
+        <code>pnpm build</code> then <code>pnpm start</code>).
       </p>
 
       <form action={createNoteAndRedirect} className="space-y-3">
@@ -32,7 +32,12 @@ export default async function Page({
           className="w-full rounded-lg border border-zinc-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-500 dark:border-zinc-700"
         />
         <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="revalidate" defaultChecked className="size-4" />
+          <input
+            type="checkbox"
+            name="revalidate"
+            defaultChecked
+            className="size-4"
+          />
           Call <code>revalidatePath()</code> for the static list
         </label>
         {typeof error === "string" && (

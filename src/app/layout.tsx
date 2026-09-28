@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             make every page in the app dynamic. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col">
         {/* Interleaving: pages stay Server Components inside the provider. */}
         <ThemeProvider>
           {children}

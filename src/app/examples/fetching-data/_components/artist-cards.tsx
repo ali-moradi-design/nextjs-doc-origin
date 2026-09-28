@@ -1,7 +1,13 @@
 import type { Album, Artist, Track } from "../_lib/db";
 import { DataCard, List } from "./ui";
 
-export function ArtistCard({ artist, readyAt }: { artist: Artist; readyAt: number }) {
+export function ArtistCard({
+  artist,
+  readyAt,
+}: {
+  artist: Artist;
+  readyAt: number;
+}) {
   return (
     <DataCard title="Artist" readyAt={readyAt}>
       <p className="text-2xl font-semibold">{artist.name}</p>
@@ -12,7 +18,13 @@ export function ArtistCard({ artist, readyAt }: { artist: Artist; readyAt: numbe
   );
 }
 
-export function AlbumsCard({ albums, readyAt }: { albums: Album[]; readyAt: number }) {
+export function AlbumsCard({
+  albums,
+  readyAt,
+}: {
+  albums: Album[];
+  readyAt: number;
+}) {
   return (
     <DataCard title="Albums" readyAt={readyAt}>
       <List
@@ -26,7 +38,13 @@ export function AlbumsCard({ albums, readyAt }: { albums: Album[]; readyAt: numb
   );
 }
 
-export function TracksCard({ tracks, readyAt }: { tracks: Track[]; readyAt: number }) {
+export function TracksCard({
+  tracks,
+  readyAt,
+}: {
+  tracks: Track[];
+  readyAt: number;
+}) {
   return (
     <DataCard title="Top tracks" readyAt={readyAt}>
       <List
