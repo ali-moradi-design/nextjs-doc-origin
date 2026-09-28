@@ -20,6 +20,9 @@
   typos. Never copy my spelling; always write correct Persian.
 - Never take or send screenshots; they don't help me and they fill the context.
   Verify in the browser with text checks instead.
+- Before making any change, ask me which branch to work on (e.g. `main`),
+  even if the session was started on another branch. Do not create new
+  branches unless I ask.
 - Read LEARNING.md at the start of a session: it says which lessons are done
   and what comes next. Update it at the end of every lesson.
 - All code, comments, file names, and UI text in the app must be in English.
