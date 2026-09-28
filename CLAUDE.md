@@ -18,6 +18,10 @@
   in parentheses, e.g. "‏ولی کامپوننت (`Item`)‏ فقط بعد از ...".
 - I type fast on a keyboard without Persian letters, so my messages have
   typos. Never copy my spelling; always write correct Persian.
+- Never take or send screenshots; they don't help me and they fill the context.
+  Verify in the browser with text checks instead.
+- Read LEARNING.md at the start of a session: it says which lessons are done
+  and what comes next. Update it at the end of every lesson.
 - All code, comments, file names, and UI text in the app must be in English.
 - Workflow: when I give you a Next.js docs page, first explain it in Persian,
   wait for my confirmation, then build a small example under app/examples/<topic>.
