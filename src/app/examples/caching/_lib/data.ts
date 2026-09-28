@@ -46,6 +46,8 @@ export async function getProductsUncached() {
 
 const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.79 };
 
+export const currencies = Object.keys(rates);
+
 // The argument is part of the cache key: USD, EUR and GBP are stored
 // separately. The first visit per currency is slow, the next ones instant.
 export async function getRate(currency: string) {
