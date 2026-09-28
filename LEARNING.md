@@ -53,5 +53,11 @@ Update this file at the end of every lesson.
   page invalidated but not visited before a restart shows its old value
   again until its `revalidate` time or the next invalidation. `stale` does
   nothing in `pnpm dev`.
+- Next.js sends `s-maxage, stale-while-revalidate` on page and RSC
+  responses (meant for CDNs), and Chrome applies `stale-while-revalidate`
+  to its own HTTP cache: a navigation can get an old response while the
+  new one loads in the background. The stale example turns this off with
+  `Cache-Control: private, no-cache` in `next.config.ts` `headers()`, and
+  its links use `prefetch={false}` so each click is one request.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.

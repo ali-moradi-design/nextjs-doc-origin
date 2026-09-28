@@ -14,10 +14,9 @@ export default function Page() {
           <code>stale</code> is how long the browser reuses a page it already
           has, without asking the server. It only matters when you move between
           pages with <code>&lt;Link&gt;</code>. Staying on a page never updates
-          it: the requests you see in the Network tab while you wait are
-          prefetches for the links. Only in production (<code>pnpm build</code>{" "}
-          then <code>pnpm start</code>): <code>pnpm dev</code> asks the server
-          on every navigation.
+          it. A full reload (F5) clears what the browser kept. Only in
+          production (<code>pnpm build</code> then <code>pnpm start</code>):{" "}
+          <code>pnpm dev</code> asks the server on every navigation.
         </p>
       </header>
 
