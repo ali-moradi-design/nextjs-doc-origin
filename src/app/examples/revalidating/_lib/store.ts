@@ -4,7 +4,12 @@ import "server-only";
 
 export type Post = { id: string; title: string };
 
-type Store = { posts: Post[]; price: number; headline: number };
+type Store = {
+  posts: Post[];
+  price: number;
+  headline: number;
+  counter: number;
+};
 
 export const headlines = [
   "Spring sale starts Monday",
@@ -26,6 +31,7 @@ const store = (globalStore.revalidatingStore ??= {
   ],
   price: 100,
   headline: 0,
+  counter: 1,
 });
 
 export function sleep(ms: number) {
@@ -57,4 +63,14 @@ export function readHeadline() {
 
 export function nextHeadline() {
   store.headline = (store.headline + 1) % headlines.length;
+}
+
+export function readCounter() {
+  console.log("[db] readCounter()");
+  return store.counter;
+}
+
+export function increaseCounter() {
+  store.counter += 1;
+  return store.counter;
 }

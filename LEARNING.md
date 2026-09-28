@@ -43,5 +43,8 @@ Update this file at the end of every lesson.
   and `refresh()` do. With `"max"` a reload can still show the stale value
   once. Shared UI (`Card`, `Section`, `Skeleton`, `Tag`) now lives in
   `src/app/_components/ui`.
+- `stale` (browser router cache) is shown in `/examples/revalidating/stale`:
+  it only matters for `<Link>` navigation, a full reload ignores it, and
+  invalidating from a Route Handler does not clear it (a Server Action does).
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.

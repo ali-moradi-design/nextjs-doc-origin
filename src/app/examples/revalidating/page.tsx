@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { Section } from "@/src/app/_components/ui/section";
 import { Skeleton } from "@/src/app/_components/ui/skeleton";
@@ -82,6 +83,15 @@ export default function Page() {
           action={revalidateWholePage}
           label="revalidatePath('/examples/revalidating')"
         />
+      </Section>
+
+      <Section
+        title="6. cacheLife: stale"
+        description="stale is about the browser, not the server. It needs moving between pages, so it has its own example."
+      >
+        <Link href="/examples/revalidating/stale" className="text-sm underline">
+          Open the stale example
+        </Link>
       </Section>
     </main>
   );
