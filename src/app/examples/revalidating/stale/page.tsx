@@ -13,8 +13,11 @@ export default function Page() {
         <p className="text-zinc-600 dark:text-zinc-400">
           <code>stale</code> is how long the browser reuses a page it already
           has, without asking the server. It only matters when you move between
-          pages with <code>&lt;Link&gt;</code>. Try it in production (
-          <code>pnpm build</code> then <code>pnpm start</code>).
+          pages with <code>&lt;Link&gt;</code>. Staying on a page never updates
+          it: the requests you see in the Network tab while you wait are
+          prefetches for the links. Only in production (<code>pnpm build</code>{" "}
+          then <code>pnpm start</code>): <code>pnpm dev</code> asks the server
+          on every navigation.
         </p>
       </header>
 

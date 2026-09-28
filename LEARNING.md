@@ -46,5 +46,12 @@ Update this file at the end of every lesson.
 - `stale` (browser router cache) is shown in `/examples/revalidating/stale`:
   it only matters for `<Link>` navigation, a full reload ignores it, and
   invalidating from a Route Handler does not clear it (a Server Action does).
+- Fake stores for cache examples must survive restarts: `use cache` pages
+  are saved on disk, so an in-memory store that resets on `pnpm start`
+  disagrees with the cache. The revalidating store is a JSON file in
+  `.data/` (git-ignored). Also: tag invalidations are kept in memory, so a
+  page invalidated but not visited before a restart shows its old value
+  again until its `revalidate` time or the next invalidation. `stale` does
+  nothing in `pnpm dev`.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.
