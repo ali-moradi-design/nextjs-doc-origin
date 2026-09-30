@@ -12,6 +12,7 @@ const examples = [
   "images",
   "fonts",
   "metadata-and-og-images",
+  "route-handlers",
 ];
 
 // Served as /sitemap.xml. Lists the pages crawlers should know about, with

@@ -30,10 +30,11 @@ Update this file at the end of every lesson.
 | 12  | Images (next/image, all props, remotePatterns, qualities)    | `/examples/images`                                   |
 | 13  | Fonts (next/font google + local, variable, fallback)         | `/examples/fonts`                                    |
 | 14  | Metadata and OG images (+ robots.txt, sitemap.xml)           | `/examples/metadata-and-og-images`                   |
+| 15  | Route Handlers                                               | `/examples/route-handlers`                           |
 
 ## Next lesson
 
-15. Route Handlers: `node_modules/next/dist/docs/01-app/01-getting-started/15-route-handlers.md`
+16. Proxy: `node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md`
 
 ## Things learned the hard way
 
@@ -96,3 +97,12 @@ Update this file at the end of every lesson.
   navigation the title is updated in `<head>`.
 - `opengraph-image.tsx` in a `[slug]` folder can export
   `generateStaticParams`, so each post image is prerendered at build time.
+- Route Handlers (checked with curl on `pnpm start`): a method that is not
+  exported answers 405; `OPTIONS` (204 + `Allow` header) and `HEAD` are
+  added automatically. A plain `GET` is dynamic (`ƒ`) and runs on every
+  request; `dynamic = "force-static"` makes it `○`, built once
+  (`x-nextjs-cache: HIT`). `request.json()` throws on a broken body, so
+  catch it and answer 400. The browser hides `Set-Cookie` from `fetch()`.
+- Stopping the server from a script: `pkill -f` / `pgrep -f` with the
+  server's name also match the shell running that command and kill it.
+  Stop it by the PID shown by `ss -ltnp` for port 3000 instead.

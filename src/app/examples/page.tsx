@@ -55,6 +55,12 @@ const examples = [
     description:
       "metadata object, generateMetadata, streaming metadata, ImageResponse, robots.txt, sitemap.xml.",
   },
+  {
+    href: "/examples/route-handlers",
+    title: "Route Handlers",
+    description:
+      "route.ts: GET/POST/PATCH/DELETE, RouteContext, 405, caching, cookies, redirect, CSV, streaming.",
+  },
 ];
 
 export default function Page() {
