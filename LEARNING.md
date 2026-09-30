@@ -28,10 +28,11 @@ Update this file at the end of every lesson.
 | 10  | Error Handling (catchError, error.tsx, not-found, global)    | `/examples/error-handling`                           |
 | 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                      |
 | 12  | Images (next/image, all props, remotePatterns, qualities)    | `/examples/images`                                   |
+| 13  | Fonts (next/font google + local, variable, fallback)         | `/examples/fonts`                                    |
 
 ## Next lesson
 
-13. Fonts: `node_modules/next/dist/docs/01-app/01-getting-started/13-fonts.md`
+14. Metadata and OG images: `node_modules/next/dist/docs/01-app/01-getting-started/14-metadata-and-og-images.md`
 
 ## Things learned the hard way
 
@@ -68,3 +69,10 @@ Update this file at the end of every lesson.
   `placeholder="blur"` paints it as a blurred SVG `background-image` on the
   `<img>` until `onLoad`. `/examples/images` slows images down with a
   custom `loader` + route handler so the placeholder is visible.
+- Fonts: next/font options must be literals (read at build time); define
+  fonts once in a fonts file. The CSS variable from `variable` only exists
+  inside the element that has `font.variable`; Tailwind v4 reads it with
+  `font-(family-name:--font-x)`. The generated "X Fallback" face uses
+  `local("Times New Roman")`/`local(Arial)` + `size-adjust`, so it only
+  helps where that system font is installed. The root layout loads Geist,
+  but `body { font-family: Arial }` in `globals.css` overrides it.

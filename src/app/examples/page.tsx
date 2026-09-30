@@ -43,6 +43,12 @@ const examples = [
     description:
       "next/image: static and dynamic imports, remote images, fill, sizes, quality, placeholder.",
   },
+  {
+    href: "/examples/fonts",
+    title: "Fonts",
+    description:
+      "next/font: Google and local fonts, variable fonts, CSS variables, fallback, preloading.",
+  },
 ];
 
 export default function Page() {
