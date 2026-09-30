@@ -1,6 +1,7 @@
 import { ApplyStyles } from "./_components/apply-styles";
 import { FallbackComparison } from "./_components/fallback-comparison";
 import { FontObject } from "./_components/font-object";
+import { FontSwapSimulator } from "./_components/font-swap-simulator";
 import { GoogleStaticFont } from "./_components/google-static-font";
 import { GoogleVariableFont } from "./_components/google-variable-font";
 import { LoadedFonts } from "./_components/loaded-fonts";
@@ -69,14 +70,24 @@ export default function Page() {
       </Section>
 
       <Section
-        title="7. Self-hosting and preloading"
+        title="7. Watch the swap"
+        description="The button switches both boxes from their fallback to Lora, like the moment the font file arrives. With the plain fallback the text and the button jump; with the adjusted one they barely move."
+      >
+        <FontSwapSimulator
+          fontFamily={lora.style.fontFamily}
+          fallbackFamily={fallbackFamily}
+        />
+      </Section>
+
+      <Section
+        title="8. Self-hosting and preloading"
         description="Font files read from the browser after load. Pacifico has preload: false, so it is downloaded but not preloaded."
       >
         <LoadedFonts />
       </Section>
 
       <Section
-        title="8. Tips for next/font/local"
+        title="9. Tips for next/font/local"
         description="Which file format to use and how to write paths that build on Windows, macOS and Linux."
       >
         <LocalFontTips />

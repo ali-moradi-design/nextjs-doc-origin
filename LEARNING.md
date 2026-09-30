@@ -80,4 +80,4 @@ Update this file at the end of every lesson.
   its own `@font-face` with one URL, so extra formats are not fallbacks).
   `path` is relative to the calling file, with `/`, exact case (Linux is
   case-sensitive: a wrong case builds on Windows/macOS but fails on Linux),
-  no `@/` alias. Tips are on `/examples/fonts` section 8.
+  no `@/` alias. Tips are on `/examples/fonts` section 9.
