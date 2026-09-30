@@ -76,3 +76,8 @@ Update this file at the end of every lesson.
   `local("Times New Roman")`/`local(Arial)` + `size-adjust`, so it only
   helps where that system font is installed. The root layout loads Geist,
   but `body { font-family: Arial }` in `globals.css` overrides it.
+- `next/font/local`: use one `.woff2` per weight/style (each `src` entry is
+  its own `@font-face` with one URL, so extra formats are not fallbacks).
+  `path` is relative to the calling file, with `/`, exact case (Linux is
+  case-sensitive: a wrong case builds on Windows/macOS but fails on Linux),
+  no `@/` alias. Tips are on `/examples/fonts` section 8.
