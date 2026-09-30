@@ -1,0 +1,10 @@
+# Files the image must not copy: they are rebuilt inside the container,
+# or they are secrets / local only.
+.git
+.next
+node_modules
+.env*
+Dockerfile
+.dockerignore
+README.md
+LEARNING.md

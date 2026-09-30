@@ -32,11 +32,11 @@ Update this file at the end of every lesson.
 | 14  | Metadata and OG images (+ robots.txt, sitemap.xml)           | `/examples/metadata-and-og-images`                   |
 | 15  | Route Handlers                                               | `/examples/route-handlers`                           |
 | 16  | Proxy (headers, redirect, rewrite, auth check, 401)          | `/examples/proxy` (+ `src/proxy.ts`)                 |
+| 17  | Deploying (standalone, Docker, static export, env variables) | `/examples/deploying` (+ `Dockerfile`)               |
 
 ## Next lesson
 
-17. The next page after Proxy in
-    `node_modules/next/dist/docs/01-app/01-getting-started/`.
+18. Upgrading: `node_modules/next/dist/docs/01-app/01-getting-started/18-upgrading.md`
 
 ## Things learned the hard way
 
@@ -117,3 +117,24 @@ Update this file at the end of every lesson.
   action must `redirect()` to make a new request.
 - There is no `ss` in the container: find the server PID from
   `/proc/*/cmdline` (`next-server`).
+- Deploying: `output: "standalone"` is on in `next.config.ts`.
+  `.next/standalone` (~52 MB vs 472 MB `node_modules`) has `server.js` but
+  not `public/` or `.next/static/`: `pnpm start:standalone`
+  (`scripts/start-standalone.mjs`) copies them first. `pnpm start` still
+  works but warns. `NEXT_PUBLIC_*` is inlined by `next build` (changing it
+  at runtime does nothing); a server variable is read at runtime only on a
+  dynamic page (`connection()`), a static page keeps the build value.
+- Docker in this cloud container: start `dockerd` by hand. `docker build`
+  cannot reach npm (proxy CA): build with a scratch copy of the Dockerfile
+  that adds `COPY --from=ca ca-bundle.crt` + `NODE_EXTRA_CA_CERTS`, and
+  `--network host --build-context ca=/root/.ccr --build-arg HTTPS_PROXY`.
+  The committed Dockerfile stays clean. Final image: 54 MB app on
+  `node:22-alpine`, runs as the `nextjs` user.
+- `output: "export"` on this project (scratch copy) fails on: route
+  handlers / robots / sitemap / OG images without `force-static`, `[id]`
+  without `generateStaticParams`, Server Actions, request-time APIs.
+  `proxy.ts` is only a warning; `next/image` builds but points to
+  `/_next/image`, which is a 404 on a plain file server.
+- Stopping a server: list `/proc/*/cmdline` entries starting with
+  `next-server` and kill that PID (the cmdline is padded with spaces);
+  a pattern like `*server.js*` also matches (and kills) the calling shell.

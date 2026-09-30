@@ -67,6 +67,12 @@ const examples = [
     description:
       "proxy.ts: matcher, request and response headers, redirect, rewrite (A/B), auth check, direct response.",
   },
+  {
+    href: "/examples/deploying",
+    title: "Deploying",
+    description:
+      "Node.js, standalone output, Docker, static export, build-time vs runtime environment variables.",
+  },
 ];
 
 export default function Page() {
