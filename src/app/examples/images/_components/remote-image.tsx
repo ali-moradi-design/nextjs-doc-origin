@@ -1,7 +1,5 @@
 import Image from "next/image";
-
-const REMOTE_BASE =
-  "https://raw.githubusercontent.com/vercel/next.js/canary/examples/image-component/public";
+import { REMOTE_BASE } from "../_lib/constants";
 
 // Allowed by images.remotePatterns in next.config.ts. The server downloads
 // and optimizes it; the browser only talks to /_next/image. width and

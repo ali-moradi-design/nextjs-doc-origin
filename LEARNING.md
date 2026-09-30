@@ -64,3 +64,7 @@ Update this file at the end of every lesson.
   Without `sizes`, the `srcset` is `1x`/`2x` of the `width` prop, so a
   `width` much larger than the rendered size downloads a much bigger file.
   `priority` is deprecated in 16: use `preload` (or `loading="eager"`).
+- `blurDataURL` is a tiny (8 × 5 px) base64 image inlined in the HTML;
+  `placeholder="blur"` paints it as a blurred SVG `background-image` on the
+  `<img>` until `onLoad`. `/examples/images` slows images down with a
+  custom `loader` + route handler so the placeholder is visible.

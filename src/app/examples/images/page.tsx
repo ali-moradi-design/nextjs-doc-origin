@@ -1,6 +1,8 @@
+import { BlurDataUrlPreview } from "./_components/blur-data-url-preview";
 import { DynamicImportImage } from "./_components/dynamic-import-image";
 import { FallbackImage } from "./_components/fallback-image";
 import { FillImages } from "./_components/fill-images";
+import { PlaceholderDemo } from "./_components/placeholder-demo";
 import { PublicImage } from "./_components/public-image";
 import { QualityComparison } from "./_components/quality-comparison";
 import { RemoteImage } from "./_components/remote-image";
@@ -81,6 +83,20 @@ export default function Page() {
         description="currentSrc is the original file, not /_next/image."
       >
         <UnoptimizedImages />
+      </Section>
+
+      <Section
+        title="10. What a blurDataURL is"
+        description="A tiny image (8 × 5 px here) embedded in the page as text, so it shows before any request for the real image."
+      >
+        <BlurDataUrlPreview />
+      </Section>
+
+      <Section
+        title="11. placeholder while loading"
+        description="A custom loader delays every image by 2 seconds so you can watch the placeholders. Press Reload to watch again."
+      >
+        <PlaceholderDemo />
       </Section>
     </main>
   );
