@@ -49,6 +49,12 @@ const examples = [
     description:
       "next/font: Google and local fonts, variable fonts, CSS variables, fallback, preloading.",
   },
+  {
+    href: "/examples/metadata-and-og-images",
+    title: "Metadata and OG images",
+    description:
+      "metadata object, generateMetadata, streaming metadata, ImageResponse, robots.txt, sitemap.xml.",
+  },
 ];
 
 export default function Page() {

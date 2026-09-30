@@ -29,10 +29,11 @@ Update this file at the end of every lesson.
 | 11  | CSS (Tailwind v4, CSS Modules, global CSS, cssChunking)      | `/examples/css`                                      |
 | 12  | Images (next/image, all props, remotePatterns, qualities)    | `/examples/images`                                   |
 | 13  | Fonts (next/font google + local, variable, fallback)         | `/examples/fonts`                                    |
+| 14  | Metadata and OG images (+ robots.txt, sitemap.xml)           | `/examples/metadata-and-og-images`                   |
 
 ## Next lesson
 
-14. Metadata and OG images: `node_modules/next/dist/docs/01-app/01-getting-started/14-metadata-and-og-images.md`
+15. Route Handlers: `node_modules/next/dist/docs/01-app/01-getting-started/15-route-handlers.md`
 
 ## Things learned the hard way
 
@@ -81,3 +82,17 @@ Update this file at the end of every lesson.
   `path` is relative to the calling file, with `/`, exact case (Linux is
   case-sensitive: a wrong case builds on Windows/macOS but fails on Linux),
   no `@/` alias. Tips are on `/examples/fonts` section 9.
+- Metadata: `title.template` in a layout applies to child segments only,
+  not to the `page.tsx` of the same folder (that page gets
+  `title.default`). `openGraph` from a child replaces the parent's
+  `openGraph` as a whole (read `parent` to keep fields like `siteName`).
+  Next.js fills `og:title`/`og:description` and the `twitter:*` tags from
+  `title`, `description` and `opengraph-image` when they are not set.
+- `metadataBase` is set in the root layout from `src/app/_lib/site.ts`
+  (`http://localhost:3000`); `robots.ts` and `sitemap.ts` use the same URL.
+- Streaming metadata (checked with curl on `/streaming`): a browser gets
+  the page at ~0.3 s and the `<title>` at the end of `<body>` ~2 s later;
+  `Twitterbot` waits ~2 s and gets it in `<head>`. On a client-side
+  navigation the title is updated in `<head>`.
+- `opengraph-image.tsx` in a `[slug]` folder can export
+  `generateStaticParams`, so each post image is prerendered at build time.
