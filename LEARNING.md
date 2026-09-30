@@ -31,10 +31,12 @@ Update this file at the end of every lesson.
 | 13  | Fonts (next/font google + local, variable, fallback)         | `/examples/fonts`                                    |
 | 14  | Metadata and OG images (+ robots.txt, sitemap.xml)           | `/examples/metadata-and-og-images`                   |
 | 15  | Route Handlers                                               | `/examples/route-handlers`                           |
+| 16  | Proxy (headers, redirect, rewrite, auth check, 401)          | `/examples/proxy` (+ `src/proxy.ts`)                 |
 
 ## Next lesson
 
-16. Proxy: `node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md`
+17. The next page after Proxy in
+    `node_modules/next/dist/docs/01-app/01-getting-started/`.
 
 ## Things learned the hard way
 
@@ -106,3 +108,12 @@ Update this file at the end of every lesson.
 - Stopping the server from a script: `pkill -f` / `pgrep -f` with the
   server's name also match the shell running that command and kill it.
   Stop it by the PID shown by `ss -ltnp` for port 3000 instead.
+- Proxy: `src/proxy.ts` (next to `app`), one per project; its logic lives
+  in `src/app/examples/proxy/_lib/proxy/*`, each module returns a response
+  or `undefined`. The matcher `/examples/proxy/:path*` keeps it off other
+  pages (checked with curl: no `x-proxy` header there). A Server Action is
+  a POST to the page, and the proxy runs on it BEFORE the action: a rewrite
+  that depends on a cookie the action changes shows the old page, so the
+  action must `redirect()` to make a new request.
+- There is no `ss` in the container: find the server PID from
+  `/proc/*/cmdline` (`next-server`).

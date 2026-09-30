@@ -61,6 +61,12 @@ const examples = [
     description:
       "route.ts: GET/POST/PATCH/DELETE, RouteContext, 405, caching, cookies, redirect, CSV, streaming.",
   },
+  {
+    href: "/examples/proxy",
+    title: "Proxy",
+    description:
+      "proxy.ts: matcher, request and response headers, redirect, rewrite (A/B), auth check, direct response.",
+  },
 ];
 
 export default function Page() {
