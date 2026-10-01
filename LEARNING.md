@@ -23,6 +23,7 @@ Update this file at the end of every lesson.
 | 6   | Fetching Data (incl. Preloading)                             | `/examples/fetching-data`                |
 | 7   | Mutating Data (+ react-hook-form, pros/cons guide)           | `/examples/mutating-data`                |
 | 8   | Caching                                                      | `/examples/caching`                      |
+| G1  | Guide: Adopting Partial Prefetching                          | `/examples/partial-prefetching`          |
 
 ## Next lesson
 
@@ -45,3 +46,21 @@ Update this file at the end of every lesson.
   `src/app/_components/ui`.
 - React Compiler is on: use `useWatch` instead of react-hook-form's `watch()`.
 - The user reads explanations in the chat only: no screenshots.
+- Partial Prefetching (`partialPrefetching: true` in `next.config.ts`,
+  checked in a production build with Playwright request logs): one App
+  Shell request (`next-router-prefetch: 3`) is shared by all links to
+  `/products/[id]`; only `prefetch={true}` links add a per-link request
+  (`next-router-prefetch: 2`) that resolves cached URL data. Uncached
+  content is never prefetched any more, even with `prefetch={true}`.
+  Session content (cookie read outside a `use cache` lookup) is in the
+  shell. Links prefetch only when visible: scroll before measuring.
+- In 16.3.6, a per-route `export const prefetch = "partial"` with the
+  global flag off made DEFAULT links do per-link prefetches too (unlike
+  the docs); with the global flag on it matches the docs.
+- The live nextjs.org page (canary) is newer than the docs in
+  `node_modules`: it adds `prefetch()` from `next/cache`, an
+  `@next/playwright` `instant()` test and "exclude content from a
+  prefetch", which 16.3.6 doesn't have. `nextjs.org` is blocked in the
+  cloud container: read the source from
+  `raw.githubusercontent.com/vercel/next.js/canary/docs/...` instead.
+- Killing `*next dev*` by cmdline also kills the calling shell.

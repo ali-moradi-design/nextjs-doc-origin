@@ -37,6 +37,12 @@ const examples = [
     description:
       "cacheLife, cacheTag, updateTag, revalidateTag, revalidatePath, webhook.",
   },
+  {
+    href: "/examples/partial-prefetching",
+    title: "Partial Prefetching",
+    description:
+      "App Shell, prefetch = 'partial', per-link prefetch, URL data in Suspense.",
+  },
 ];
 
 export default function Page() {
