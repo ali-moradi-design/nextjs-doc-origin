@@ -73,6 +73,12 @@ const examples = [
     description:
       "Node.js, standalone output, Docker, static export, build-time vs runtime environment variables.",
   },
+  {
+    href: "/examples/analytics",
+    title: "Analytics",
+    description:
+      "instrumentation-client.ts, onRouterTransitionStart, useReportWebVitals, sendBeacon to a route handler.",
+  },
 ];
 
 export default function Page() {

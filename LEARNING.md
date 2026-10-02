@@ -34,6 +34,12 @@ Update this file at the end of every lesson.
 | 16  | Proxy (headers, redirect, rewrite, auth check, 401)          | `/examples/proxy` (+ `src/proxy.ts`)                 |
 | 17  | Deploying (standalone, Docker, static export, env variables) | `/examples/deploying` (+ `Dockerfile`)               |
 
+## Lessons done (docs: Guides)
+
+| Docs page                                                      | Example                                                   |
+| -------------------------------------------------------------- | --------------------------------------------------------- |
+| Analytics (instrumentation-client, useReportWebVitals, beacon) | `/examples/analytics` (+ `src/instrumentation-client.ts`) |
+
 ## Next lesson
 
 18. Upgrading: `node_modules/next/dist/docs/01-app/01-getting-started/18-upgrading.md`
@@ -138,3 +144,12 @@ Update this file at the end of every lesson.
 - Stopping a server: list `/proc/*/cmdline` entries starting with
   `next-server` and kill that PID (the cmdline is padded with spaces);
   a pattern like `*server.js*` also matches (and kills) the calling shell.
+- Analytics (checked with Playwright): `src/instrumentation-client.ts`
+  runs on every page before hydration; its module state is not shared
+  with page bundles reliably, so the example keeps events on `window`.
+  `useReportWebVitals` (Next.js bundles web-vitals without
+  `reportAllChanges`): FCP/TTFB arrive at load; LCP is final at the first
+  click or when the tab is hidden; CLS and INP only when the tab is hidden.
+  FID is still reported. `onRouterTransitionStart` gets a path for `push`
+  and a full URL for `traverse` (back button); a full reload does not
+  call it. Errors thrown in event handlers reach `window` `error`.
