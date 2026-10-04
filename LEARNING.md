@@ -13,7 +13,8 @@ Update this file at the end of every lesson.
   `main` unless the user asks.
 - Site-wide theme (light / dark / system) lives in `src/app/_components`
   and `src/app/_lib/theme.ts`, applied by an inline script in the root layout.
-- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`.
+- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`
+  (+ `jose`, `server-only` on the branch `authentication`).
 
 ## Lessons done (docs: Getting Started)
 
@@ -36,9 +37,10 @@ Update this file at the end of every lesson.
 
 ## Lessons done (docs: Guides)
 
-| Docs page                                                      | Example                                                   |
-| -------------------------------------------------------------- | --------------------------------------------------------- |
-| Analytics (instrumentation-client, useReportWebVitals, beacon) | `/examples/analytics` (+ `src/instrumentation-client.ts`) |
+| Docs page                                                       | Example                                                   |
+| --------------------------------------------------------------- | --------------------------------------------------------- |
+| Analytics (instrumentation-client, useReportWebVitals, beacon)  | `/examples/analytics` (+ `src/instrumentation-client.ts`) |
+| Authentication (react-hook-form, jose session, proxy, DAL, DTO) | `/examples/authentication` (branch `authentication`)      |
 
 ## Next lesson
 
@@ -170,3 +172,16 @@ Update this file at the end of every lesson.
   needed in the app. Web vitals use the docs' snippet (integer values,
   CLS x 1000). To use the real service, change `NEXT_PUBLIC_GA_ID` and
   `GTAG_SRC` in `_lib/gtag.ts`.
+- Authentication (branch `authentication`, checked with Playwright): the
+  forms use react-hook-form + `zodResolver` and call the Server Action with
+  a plain object; the action validates again, returns field errors (shown
+  with `setError`) or calls `createSession()` + `redirect()`, which the
+  router follows. The session is a jose JWT (`userId`, `role`) in an
+  httpOnly cookie scoped to `path: /examples/authentication`; `secure: true`
+  works on http://localhost. `server-only` imports are fine in the proxy.
+  The proxy refreshes the cookie only on GET: on a Server Action POST
+  (logout) its Set-Cookie would fight the action's. A stateless session
+  outlives a deleted user (or a server restart of the fake db): only the
+  DAL's `getUser()` notices, so the dashboard shows "account no longer
+  exists" instead of redirecting (proxy + page redirects would loop).
+  Next.js's route announcer also has `role="alert"`.

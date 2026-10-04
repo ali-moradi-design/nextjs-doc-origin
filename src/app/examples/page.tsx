@@ -79,6 +79,12 @@ const examples = [
     description:
       "instrumentation-client.ts, onRouterTransitionStart, useReportWebVitals, sendBeacon, Google Analytics (gtag.js) with a fake Google.",
   },
+  {
+    href: "/examples/authentication",
+    title: "Authentication",
+    description:
+      "react-hook-form + Server Actions, jose session cookie, proxy check, Data Access Layer, DTOs, 401/403.",
+  },
 ];
 
 export default function Page() {
