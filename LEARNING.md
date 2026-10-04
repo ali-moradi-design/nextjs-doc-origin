@@ -37,10 +37,10 @@ Update this file at the end of every lesson.
 
 ## Lessons done (docs: Guides)
 
-| Docs page                                                       | Example                                                   |
-| --------------------------------------------------------------- | --------------------------------------------------------- |
-| Analytics (instrumentation-client, useReportWebVitals, beacon)  | `/examples/analytics` (+ `src/instrumentation-client.ts`) |
-| Authentication (react-hook-form, jose session, proxy, DAL, DTO) | `/examples/authentication` (branch `authentication`)      |
+| Docs page                                                                        | Example                                                   |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Analytics (instrumentation-client, useReportWebVitals, beacon)                   | `/examples/analytics` (+ `src/instrumentation-client.ts`) |
+| Authentication (react-hook-form, stateless + database sessions, proxy, DAL, DTO) | `/examples/authentication` (branch `authentication`)      |
 
 ## Next lesson
 
@@ -185,3 +185,13 @@ Update this file at the end of every lesson.
   DAL's `getUser()` notices, so the dashboard shows "account no longer
   exists" instead of redirecting (proxy + page redirects would loop).
   Next.js's route announcer also has `role="alert"`.
+- Database sessions (same example, picked with a radio in the forms): the
+  JWT holds only `{ kind: "database", sessionId }`; the DAL looks up the
+  row (role is always fresh) and extends its expiry, while the proxy only
+  re-signs the cookie (no database in the proxy). Checked with Playwright:
+  revoking a session, "log out everywhere else", deleting a user and
+  replaying an old cookie after logout all end the session at once
+  (a replayed stateless cookie still opens the dashboard). A valid cookie
+  with no row would loop (proxy sends login to dashboard, DAL sends it
+  back), so `verifySession()` redirects to the `api/session-ended` Route
+  Handler, which deletes the cookie (pages can't) and redirects to login.

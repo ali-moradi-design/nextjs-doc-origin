@@ -7,7 +7,7 @@ import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { PATHS, safeRedirectPath } from "./constants";
-import { getUser } from "./dal";
+import { getUser, verifySession } from "./dal";
 import * as db from "./db";
 import {
   loginSchema,
@@ -28,7 +28,7 @@ export async function signup(input: unknown): Promise<FormResult<SignupInput>> {
   if (!parsed.success) {
     return { errors: z.flattenError(parsed.error).fieldErrors };
   }
-  const { name, email, password } = parsed.data;
+  const { name, email, password, sessionKind } = parsed.data;
 
   // A rule the browser can't check.
   if (await db.findUserByEmail(email)) {
@@ -41,7 +41,7 @@ export async function signup(input: unknown): Promise<FormResult<SignupInput>> {
   const user = await db.insertUser({ name, email, password });
 
   // 4. Create the session (sets the cookie). 5. Redirect.
-  await createSession(user.id, user.role);
+  await createSession(user, sessionKind);
   redirect(PATHS.dashboard);
 }
 
@@ -63,7 +63,7 @@ export async function login(
   // One message for both cases: don't reveal which emails have accounts.
   if (!user) return { form: "Invalid email or password." };
 
-  await createSession(user.id, user.role);
+  await createSession(user, parsed.data.sessionKind);
   // `from` comes from the URL, so it is user input too.
   redirect(safeRedirectPath(from));
 }
@@ -97,4 +97,35 @@ export async function deleteMember(id: unknown): Promise<ActionResult> {
 
   refresh();
   return { ok: true, message: "Member deleted." };
+}
+
+// Database sessions only: end one of your own sessions (another device).
+export async function revokeSession(id: unknown): Promise<ActionResult> {
+  const session = await verifySession();
+  if (session.kind !== "database") {
+    return { ok: false, message: "Stateless sessions can't be revoked." };
+  }
+  if (typeof id !== "string") return { ok: false, message: "Invalid id." };
+
+  // Authorization: only sessions that belong to you. Without this check
+  // anyone could log anyone out by guessing ids.
+  const mine = await db.listSessionsForUser(session.userId);
+  if (!mine.some((row) => row.id === id)) {
+    return { ok: false, message: "No such session." };
+  }
+
+  await db.deleteSessionRow(id);
+  refresh();
+  return { ok: true, message: "Session revoked." };
+}
+
+export async function logoutOtherSessions(): Promise<ActionResult> {
+  const session = await verifySession();
+  if (session.kind !== "database") {
+    return { ok: false, message: "Stateless sessions can't be revoked." };
+  }
+
+  await db.deleteSessionsForUser(session.userId, session.sessionId);
+  refresh();
+  return { ok: true, message: "Logged out on all other devices." };
 }

@@ -48,14 +48,31 @@ export default function Page() {
       </Section>
 
       <Section
-        title="3. Optimistic check in the proxy"
+        title="3. Stateless or database session"
+        description="Both forms let you pick. Stateless: the token holds userId and role, nothing is stored, and a token can't be taken back before it expires. Database: the token holds only a sessionId; the server can list, revoke and end sessions (log out everywhere), at the cost of a lookup on every request."
+      >
+        <ul className="list-inside list-disc text-sm text-zinc-600 dark:text-zinc-400">
+          <li>
+            Log out with a database session, then reuse the old cookie: it is
+            refused, because the row is gone.
+          </li>
+          <li>
+            When an admin deletes a member, the member&apos;s database sessions
+            are deleted too; stateless cookies keep working until the DAL
+            notices the missing user.
+          </li>
+        </ul>
+      </Section>
+
+      <Section
+        title="4. Optimistic check in the proxy"
         description="Without a valid cookie, src/proxy.ts sends the dashboard to the login page (with ?from= to come back). Logged in, it sends the login and signup pages to the dashboard, and moves the session expiry 10 minutes ahead on every page request."
       >
         <DemoLink href={PATHS.dashboard}>Open the dashboard</DemoLink>
       </Section>
 
       <Section
-        title="4. Route Handler"
+        title="5. Route Handler"
         description="Logged out: 401. Logged in as a user: 403. Logged in as an admin: 200 with data."
       >
         <AdminApiChecker />

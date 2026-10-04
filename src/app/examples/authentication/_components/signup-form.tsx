@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { signup } from "../_lib/actions";
 import { signupSchema, type SignupInput } from "../_lib/definitions";
 import { PasswordRules } from "./password-rules";
+import { SessionKindField } from "./session-kind-field";
 import { Button } from "./ui/button";
 import { Field } from "./ui/field";
 import { FormError } from "./ui/form-error";
@@ -20,7 +21,12 @@ export function SignupForm() {
     // Same schema as the server: instant errors in the browser.
     resolver: zodResolver(signupSchema),
     mode: "onTouched",
-    defaultValues: { name: "", email: "", password: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      sessionKind: "stateless",
+    },
   });
 
   async function onSubmit(data: SignupInput) {
@@ -64,6 +70,7 @@ export function SignupForm() {
         />
         <PasswordRules control={control} />
       </div>
+      <SessionKindField registration={register("sessionKind")} />
       <FormError message={errors.root?.message} />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Creating account…" : "Sign up"}

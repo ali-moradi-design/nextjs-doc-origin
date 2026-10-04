@@ -4,7 +4,8 @@ import { refreshToken, sessionCookieOptions } from "../session";
 
 // Optimistic checks: they only read the cookie (no database), because the
 // proxy runs on every request, prefetches included. The dashboard and the
-// actions still check again through the DAL.
+// actions still check again through the DAL. For a database session the
+// proxy only knows the signature is valid, not whether the row still exists.
 export async function authProxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const cookie = request.cookies.get(SESSION_COOKIE)?.value;
@@ -29,7 +30,12 @@ export async function authProxy(request: NextRequest) {
   // still reads the old cookie in this request; the browser gets the new
   // one. Not on POST: a Server Action (e.g. logout) sets the cookie itself,
   // and two Set-Cookie headers for one cookie would fight.
-  if (refreshed && request.method === "GET") {
+  // Not on the session-ended handler either: it deletes the cookie.
+  if (
+    refreshed &&
+    request.method === "GET" &&
+    pathname !== PATHS.sessionEnded
+  ) {
     response.cookies.set(
       SESSION_COOKIE,
       refreshed.token,

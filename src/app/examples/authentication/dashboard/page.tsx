@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AccountGone } from "../_components/account-gone";
+import { ActiveSessions } from "../_components/active-sessions";
 import { AdminApiChecker } from "../_components/admin-api-checker";
 import { ForbiddenTry } from "../_components/forbidden-try";
 import { LogoutButton } from "../_components/logout-button";
@@ -34,9 +35,16 @@ export default async function Page() {
         <>
           <Section
             title="Your session"
-            description="Decrypted from the cookie by verifySession(). Reload the page: the proxy refreshed the cookie, so the expiry moves (the page shows the cookie it received, one request behind)."
+            description="Read by verifySession(). Stateless: from the token; reload and the expiry moves (the proxy refreshed the cookie; the page shows the one it received, one request behind). Database: the token only holds sessionId; the expiry comes from the row, which the DAL extends on each request."
           >
             <SessionInfo />
+          </Section>
+
+          <Section
+            title="Active sessions (database sessions)"
+            description="Every login with the database type adds a row to the sessions table. Log in from another browser (or a private window), then revoke it here: its next request goes back to the login page."
+          >
+            <ActiveSessions />
           </Section>
 
           <Section

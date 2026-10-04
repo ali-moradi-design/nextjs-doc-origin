@@ -8,6 +8,7 @@ export const PATHS = {
   login: `${BASE_PATH}/login`,
   dashboard: `${BASE_PATH}/dashboard`,
   adminApi: `${BASE_PATH}/api/admin-stats`,
+  sessionEnded: `${BASE_PATH}/api/session-ended`,
 } as const;
 
 export const SESSION_COOKIE = "auth-demo-session";
@@ -17,6 +18,11 @@ export const SESSION_COOKIE = "auth-demo-session";
 export const SESSION_DURATION_MS = 10 * 60 * 1000;
 
 export type Role = "admin" | "user";
+
+// The two session strategies from the docs. The user picks one when logging
+// in, so both can be compared side by side.
+export const SESSION_KINDS = ["stateless", "database"] as const;
+export type SessionKind = (typeof SESSION_KINDS)[number];
 
 // Only allow redirects back into this example. A "from" value like
 // "https://evil.example" or "//evil.example" would be an open redirect.

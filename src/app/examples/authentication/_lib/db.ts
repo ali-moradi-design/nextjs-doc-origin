@@ -106,7 +106,10 @@ export async function insertUser(input: {
   return user;
 }
 
+// Like ON DELETE CASCADE: a deleted user's database sessions go too, so
+// they are logged out at once. (Their stateless cookies keep working.)
 export async function deleteUser(id: string) {
+  await deleteSessionsForUser(id);
   return (await table()).delete(id);
 }
 
@@ -120,4 +123,77 @@ export async function checkCredentials(email: string, password: string) {
     return undefined;
   }
   return (await verifyPassword(password, user.passwordHash)) ? user : undefined;
+}
+
+// ---------------------------------------------------------------------------
+// The sessions table, used only by database sessions.
+
+export type SessionRow = {
+  id: string;
+  userId: string;
+  userAgent: string;
+  createdAt: Date;
+  lastSeenAt: Date;
+  expiresAt: Date;
+};
+
+const globalSessions = globalThis as typeof globalThis & {
+  authSessions?: Map<string, SessionRow>;
+};
+
+function sessions() {
+  return (globalSessions.authSessions ??= new Map());
+}
+
+export async function insertSession(input: {
+  userId: string;
+  userAgent: string;
+  expiresAt: Date;
+}) {
+  const now = new Date();
+  const row: SessionRow = {
+    id: randomUUID(),
+    ...input,
+    createdAt: now,
+    lastSeenAt: now,
+  };
+  sessions().set(row.id, row);
+  return row;
+}
+
+// Returns the row only while it is not expired.
+export async function findSession(id: string) {
+  const row = sessions().get(id);
+  if (!row) return undefined;
+  if (row.expiresAt.getTime() < Date.now()) {
+    sessions().delete(id);
+    return undefined;
+  }
+  return row;
+}
+
+// Sliding expiry, stored in the row (the database is the source of truth).
+export async function touchSession(id: string, expiresAt: Date) {
+  const row = sessions().get(id);
+  if (!row) return;
+  row.lastSeenAt = new Date();
+  row.expiresAt = expiresAt;
+}
+
+export async function listSessionsForUser(userId: string) {
+  return [...sessions().values()]
+    .filter((row) => row.userId === userId)
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+}
+
+export async function deleteSessionRow(id: string) {
+  return sessions().delete(id);
+}
+
+export async function deleteSessionsForUser(userId: string, exceptId?: string) {
+  for (const row of sessions().values()) {
+    if (row.userId === userId && row.id !== exceptId) {
+      sessions().delete(row.id);
+    }
+  }
 }

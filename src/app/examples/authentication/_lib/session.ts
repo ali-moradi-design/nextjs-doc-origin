@@ -1,15 +1,19 @@
-// Stateless sessions: the session itself is a signed JWT stored in a cookie.
+// Sessions in a signed JWT cookie, in two flavours (see SessionPayload):
+// - stateless: the token holds the user id and role. Nothing is stored.
+// - database: the token holds only a session id; the row in the sessions
+//   table holds the rest and can be deleted to end the session.
 // "server-only" makes the build fail if a Client Component imports this file,
 // so the secret key can never end up in the browser bundle.
 import "server-only";
 import { jwtVerify, SignJWT } from "jose";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import {
   BASE_PATH,
   SESSION_COOKIE,
   SESSION_DURATION_MS,
-  type Role,
+  type SessionKind,
 } from "./constants";
+import { deleteSessionRow, insertSession, type User } from "./db";
 import type { SessionPayload } from "./definitions";
 
 // Create one with `openssl rand -base64 32` and put it in .env.local:
@@ -53,31 +57,59 @@ export function sessionCookieOptions(expires: Date) {
   };
 }
 
-// Call only from a Server Action or a Route Handler: a page can't set
-// cookies while it renders.
-export async function createSession(userId: string, role: Role) {
-  const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
-  const session = await encrypt({ userId, role }, expiresAt);
-  const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE, session, sessionCookieOptions(expiresAt));
+export function newExpiry() {
+  return new Date(Date.now() + SESSION_DURATION_MS);
 }
 
-// Signs a new token with a later expiry. Returns undefined when there is
-// no valid session to refresh. Used by the proxy on every request.
+// Call only from a Server Action or a Route Handler: a page can't set
+// cookies while it renders.
+export async function createSession(user: User, kind: SessionKind) {
+  const expiresAt = newExpiry();
+  let payload: SessionPayload;
+
+  if (kind === "database") {
+    // 1. Create a row in the sessions table.
+    const row = await insertSession({
+      userId: user.id,
+      userAgent: (await headers()).get("user-agent") ?? "unknown",
+      expiresAt,
+    });
+    // 2. Only its id goes into the (signed) cookie.
+    payload = { kind, sessionId: row.id };
+  } else {
+    payload = { kind, userId: user.id, role: user.role };
+  }
+
+  // 3. Store the token in the cookie (read by the proxy's optimistic check).
+  const cookieStore = await cookies();
+  cookieStore.set(
+    SESSION_COOKIE,
+    await encrypt(payload, expiresAt),
+    sessionCookieOptions(expiresAt),
+  );
+}
+
+// Signs the same payload again with a later expiry. Returns undefined when
+// there is no valid token to refresh. Used by the proxy, which must not
+// touch the database: for database sessions the DAL extends the row.
 export async function refreshToken(session: string | undefined) {
   const payload = await decrypt(session);
   if (!payload) return undefined;
 
-  const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
-  const token = await encrypt(
-    { userId: payload.userId, role: payload.role },
-    expiresAt,
-  );
-  return { token, expiresAt };
+  const expiresAt = newExpiry();
+  const fresh: SessionPayload =
+    payload.kind === "database"
+      ? { kind: payload.kind, sessionId: payload.sessionId }
+      : { kind: payload.kind, userId: payload.userId, role: payload.role };
+  return { token: await encrypt(fresh, expiresAt), expiresAt };
 }
 
 export async function deleteSession() {
   const cookieStore = await cookies();
+  const payload = await decrypt(cookieStore.get(SESSION_COOKIE)?.value);
+  // A database session is really ended on the server: even a stolen copy of
+  // the cookie stops working. A stateless token stays valid until it expires.
+  if (payload?.kind === "database") await deleteSessionRow(payload.sessionId);
   // The path must match the one used to set it.
   cookieStore.delete({ name: SESSION_COOKIE, path: BASE_PATH });
 }

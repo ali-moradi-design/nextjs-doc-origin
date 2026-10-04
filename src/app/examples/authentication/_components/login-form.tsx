@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { login } from "../_lib/actions";
 import { loginSchema, type LoginInput } from "../_lib/definitions";
+import { SessionKindField } from "./session-kind-field";
 import { Button } from "./ui/button";
 import { Field } from "./ui/field";
 import { FormError } from "./ui/form-error";
@@ -19,7 +20,7 @@ export function LoginForm({ from }: { from?: string }) {
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "", password: "", sessionKind: "stateless" },
   });
 
   async function onSubmit(data: LoginInput) {
@@ -78,6 +79,7 @@ export function LoginForm({ from }: { from?: string }) {
         {...register("password")}
         error={errors.password?.message}
       />
+      <SessionKindField registration={register("sessionKind")} />
       <FormError message={errors.root?.message} />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Logging in…" : "Log in"}
