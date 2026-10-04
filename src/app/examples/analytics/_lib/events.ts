@@ -2,7 +2,9 @@
 // The events live on window (not in module state) so every bundle that
 // imports this file sees the same list.
 
-export const COLLECT_URL = "/examples/analytics/api/collect";
+// A neutral path, rewritten to api/collect in next.config.ts. The real URL
+// contains "analytics" and "collect", which ad blockers block.
+export const COLLECT_URL = "/_e";
 const CHANGE_EVENT = "analytics:change";
 
 export type AnalyticsEvent = {
@@ -50,6 +52,8 @@ function send(event: AnalyticsEvent) {
   if (navigator.sendBeacon) {
     navigator.sendBeacon(COLLECT_URL, body);
   } else {
-    fetch(COLLECT_URL, { body, method: "POST", keepalive: true });
+    fetch(COLLECT_URL, { body, method: "POST", keepalive: true }).catch(
+      () => {}, // Blocked or offline: analytics must fail silently.
+    );
   }
 }

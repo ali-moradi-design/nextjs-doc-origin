@@ -47,7 +47,7 @@ export default function Page() {
 
       <Section
         title="4. Sending to an endpoint"
-        description="Each event is a POST to /examples/analytics/api/collect, which keeps the last 50 in memory. Look for the collect requests in DevTools > Network."
+        description="Each event is a POST to /_e. A rewrite in next.config.ts sends it to api/collect, which keeps the last 50 in memory. Ad blockers block URLs with words like analytics or collect, so the browser only sees the neutral path (DevTools > Network)."
       >
         <ServerEvents />
       </Section>

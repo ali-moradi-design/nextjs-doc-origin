@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
     // Allowed values for the quality prop. Next.js 16 default: [75].
     qualities: [25, 75, 100],
   },
+  async rewrites() {
+    return [
+      // Ad blockers match URLs like /analytics or /collect. The browser only
+      // sees this neutral first-party path; the server maps it to the real
+      // route handler, so the blocker never sees the real URL.
+      { source: "/_e", destination: "/examples/analytics/api/collect" },
+    ];
+  },
 };
 
 export default nextConfig;

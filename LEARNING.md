@@ -153,3 +153,9 @@ Update this file at the end of every lesson.
   FID is still reported. `onRouterTransitionStart` gets a path for `push`
   and a full URL for `traverse` (back button); a full reload does not
   call it. Errors thrown in event handlers reach `window` `error`.
+- Ad blockers (the user's Windscribe in Firefox) block analytics URLs by
+  pattern (`analytics`, `collect`, ...). The example now sends events to
+  the neutral first-party path `/_e`, which a `rewrites()` entry in
+  `next.config.ts` maps to `api/collect`: the browser only sees `/_e`.
+  A blocked `fetch` rejects with `TypeError` ("Failed to fetch" in Chromium),
+  so the UI shows an error instead of failing silently.
