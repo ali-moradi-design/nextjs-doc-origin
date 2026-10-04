@@ -77,7 +77,7 @@ const examples = [
     href: "/examples/analytics",
     title: "Analytics",
     description:
-      "instrumentation-client.ts, onRouterTransitionStart, useReportWebVitals, sendBeacon to a route handler.",
+      "instrumentation-client.ts, onRouterTransitionStart, useReportWebVitals, sendBeacon, Google Analytics (gtag.js) with a fake Google.",
   },
 ];
 

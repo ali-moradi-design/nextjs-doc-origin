@@ -159,3 +159,14 @@ Update this file at the end of every lesson.
   `next.config.ts` maps to `api/collect`: the browser only sees `/_e`.
   A blocked `fetch` rejects with `TypeError` ("Failed to fetch" in Chromium),
   so the UI shows an error instead of failing silently.
+- Google Analytics 4 on `/examples/analytics` (section 5): the layout
+  renders `next/script` like `@next/third-parties/google` does (that
+  package hardcodes googletagmanager.com, so it was written by hand to
+  point at a fake Google in `fake-google/`, served at `/_g/t.js` and
+  `/_g/c`). `gtag()` only pushes to `window.dataLayer`, so calls made
+  before gtag.js loads (even from `instrumentation-client.ts`) are queued
+  and run when it starts. GA4 tracks client-side navigations itself from
+  history changes ("enhanced measurement"), so no page view code is
+  needed in the app. Web vitals use the docs' snippet (integer values,
+  CLS x 1000). To use the real service, change `NEXT_PUBLIC_GA_ID` and
+  `GTAG_SRC` in `_lib/gtag.ts`.

@@ -1,8 +1,10 @@
 import { DemoLink } from "./_components/demo-link";
 import { ErrorButton } from "./_components/error-button";
 import { EventLog } from "./_components/event-log";
+import { GoogleReport } from "./_components/google-report";
 import { LateBanner } from "./_components/late-banner";
 import { ServerEvents } from "./_components/server-events";
+import { SignUpButton } from "./_components/sign-up-button";
 import { Section } from "./_components/ui/section";
 
 export default function Page() {
@@ -50,6 +52,14 @@ export default function Page() {
         description="Each event is a POST to /_e. A rewrite in next.config.ts sends it to api/collect, which keeps the last 50 in memory. Ad blockers block URLs with words like analytics or collect, so the browser only sees the neutral path (DevTools > Network)."
       >
         <ServerEvents />
+      </Section>
+
+      <Section
+        title="5. Google Analytics (fake Google)"
+        description="The layout loads gtag.js with next/script, like @next/third-parties does. Here the script and the collect URL are a fake Google in fake-google/. It sends page_view on load and on every client-side navigation, web vitals and errors as events, and the sign_up event below. Set NEXT_PUBLIC_GA_ID and GTAG_SRC to use the real service."
+      >
+        <SignUpButton />
+        <GoogleReport />
       </Section>
     </main>
   );

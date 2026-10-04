@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "./_components/google-analytics";
 import { WebVitals } from "./_components/web-vitals";
 
 // The docs put <WebVitals /> in the root layout to measure every page.
@@ -9,6 +10,7 @@ export default function Layout({
     <>
       <WebVitals />
       {children}
+      <GoogleAnalytics />
     </>
   );
 }

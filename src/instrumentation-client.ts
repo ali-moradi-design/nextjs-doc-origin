@@ -1,6 +1,7 @@
 // Runs once in the browser, after the HTML loads and before React hydrates.
 // It applies to the whole app; the analytics example shows what it records.
 import { track } from "./app/examples/analytics/_lib/events";
+import { sendException } from "./app/examples/analytics/_lib/gtag";
 
 try {
   performance.mark("app-init");
@@ -12,6 +13,8 @@ try {
 
   window.addEventListener("error", (event) => {
     track({ type: "error", label: "window error", detail: event.message });
+    // Queued in dataLayer until gtag.js loads.
+    sendException(event.message);
   });
 } catch (error) {
   // Analytics must never break the app.

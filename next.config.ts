@@ -22,6 +22,15 @@ const nextConfig: NextConfig = {
       // sees this neutral first-party path; the server maps it to the real
       // route handler, so the blocker never sees the real URL.
       { source: "/_e", destination: "/examples/analytics/api/collect" },
+      // The fake Google Analytics: gtag.js and its collect endpoint.
+      {
+        source: "/_g/t.js",
+        destination: "/examples/analytics/fake-google/gtag",
+      },
+      {
+        source: "/_g/c",
+        destination: "/examples/analytics/fake-google/collect",
+      },
     ];
   },
 };

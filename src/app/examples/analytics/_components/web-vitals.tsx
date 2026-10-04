@@ -2,6 +2,7 @@
 
 import { useReportWebVitals } from "next/web-vitals";
 import { track } from "../_lib/events";
+import { sendWebVital } from "../_lib/gtag";
 
 type Metric = Parameters<Parameters<typeof useReportWebVitals>[0]>[0];
 
@@ -17,6 +18,7 @@ function reportMetric(metric: Metric) {
     label: metric.name,
     detail: `${value} (${metric.rating}, ${metric.navigationType})`,
   });
+  sendWebVital(metric);
 }
 
 export function WebVitals() {
