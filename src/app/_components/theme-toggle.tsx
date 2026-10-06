@@ -1,7 +1,11 @@
 "use client";
 
-import { themes, type Theme } from "../_lib/theme";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "next-themes";
+import { useSyncExternalStore } from "react";
+
+const themes = ["light", "dark", "system"] as const;
+
+type Theme = (typeof themes)[number];
 
 // Inline SVG paths (24x24, stroked), so the icons look the same on every OS.
 const icons: Record<Theme, React.ReactNode> = {
@@ -26,10 +30,25 @@ const labels: Record<Theme, string> = {
   system: "System theme",
 };
 
+function subscribe() {
+  return () => {};
+}
+
+// false on the server and during hydration, true after that. The server
+// can't read localStorage, so `theme` is only known once this is true.
+function useMounted() {
+  return useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+}
+
 // Floating, site-wide. The only component that needs to *know* the theme;
 // every other component just uses dark: classes.
-export default function ThemeToggle() {
+export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const mounted = useMounted();
 
   return (
     <div
@@ -37,35 +56,39 @@ export default function ThemeToggle() {
       aria-label="Theme"
       className="fixed right-4 bottom-4 z-50 inline-flex rounded-full border border-zinc-200 bg-white/80 p-1 shadow-lg backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/80"
     >
-      {themes.map((option) => (
-        <button
-          key={option}
-          type="button"
-          role="radio"
-          aria-checked={theme === option}
-          aria-label={labels[option]}
-          title={labels[option]}
-          onClick={() => setTheme(option)}
-          className={`rounded-full p-2 transition-colors ${
-            theme === option
-              ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
-              : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
-          }`}
-        >
-          <svg
-            aria-hidden
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-4"
+      {themes.map((option) => {
+        const selected = mounted && theme === option;
+
+        return (
+          <button
+            key={option}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            aria-label={labels[option]}
+            title={labels[option]}
+            onClick={() => setTheme(option)}
+            className={`rounded-full p-2 transition-colors ${
+              selected
+                ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
+                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+            }`}
           >
-            {icons[option]}
-          </svg>
-        </button>
-      ))}
+            <svg
+              aria-hidden
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-4"
+            >
+              {icons[option]}
+            </svg>
+          </button>
+        );
+      })}
     </div>
   );
 }
