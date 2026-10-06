@@ -10,9 +10,10 @@ Update this file at the end of every lesson.
   lesson). All examples follow the Cache Components model: uncached or
   request-time data goes in `<Suspense>` or `"use cache"`; pages that block
   on purpose export `instant = false`.
-- Site-wide theme (light / dark / system) lives in `src/app/_components`
-  and `src/app/_lib/theme.ts`, applied by an inline script in the root layout.
-- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`.
+- Site-wide theme (light / dark / system) uses `next-themes`: the provider
+  and the toggle live in `src/app/_components`, wrapped in the root layout.
+- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`,
+  `next-themes`.
 
 ## Lessons done (docs: Getting Started)
 

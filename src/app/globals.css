@@ -1,17 +1,8 @@
 @import "tailwindcss";
 
-/* dark: follows the OS by default, but a .dark or .light class on <html>
-   overrides it. The class is set by the theme toggle (_components). */
-@custom-variant dark {
-  &:where(.dark, .dark *) {
-    @slot;
-  }
-  @media (prefers-color-scheme: dark) {
-    &:where(:not(.light, .light *)) {
-      @slot;
-    }
-  }
-}
+/* dark: is driven by the .dark class that next-themes puts on <html>. In
+   "system" mode next-themes picks .light or .dark from the OS setting. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Native form controls and scrollbars follow the forced theme too. */
 .dark {
@@ -32,13 +23,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 :root.dark {
