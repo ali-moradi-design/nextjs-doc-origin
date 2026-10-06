@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { InlineScript } from "./_components/inline-script";
-import ThemeProvider from "./_components/theme-provider";
-import ThemeToggle from "./_components/theme-toggle";
+import { ThemeProvider } from "./_components/theme-provider";
+import { ThemeToggle } from "./_components/theme-toggle";
 import { siteUrl } from "./_lib/site";
-import { themeScript } from "./_lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,21 +24,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    // suppressHydrationWarning: the inline script adds a class to <html>
-    // before React hydrates, so the server and browser classes differ on
+    // suppressHydrationWarning: next-themes' inline script adds a class to
+    // <html> before React hydrates, so the server and browser classes differ on
     // purpose. It only applies to this one element, not its children.
     <html
       lang="en"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        {/* Runs before the first paint. Reading cookies() here instead would
-            make every page in the app dynamic. */}
-        <InlineScript html={themeScript} />
-      </head>
       <body className="flex min-h-full flex-col">
-        {/* Interleaving: pages stay Server Components inside the provider. */}
+        {/* Interleaving: pages stay Server Components inside the provider.
+            The theme lives in localStorage, not cookies(), so pages stay
+            static. */}
         <ThemeProvider>
           {children}
           <ThemeToggle />

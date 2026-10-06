@@ -11,10 +11,10 @@ Update this file at the end of every lesson.
   migrated, plus the `/examples/caching` example) lives on the branch
   `cache-components`. It stays a separate branch: do NOT merge it into
   `main` unless the user asks.
-- Site-wide theme (light / dark / system) lives in `src/app/_components`
-  and `src/app/_lib/theme.ts`, applied by an inline script in the root layout.
-- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`
-  (+ `jose`, `server-only` on the branch `authentication`).
+- Site-wide theme (light / dark / system) uses `next-themes`: the provider
+  and the toggle live in `src/app/_components`, wrapped in the root layout.
+- Extra packages: `react-hook-form`, `zod`, `@hookform/resolvers`,
+  `next-themes` (+ `jose`, `server-only` on the branch `authentication`).
 
 ## Lessons done (docs: Getting Started)
 
